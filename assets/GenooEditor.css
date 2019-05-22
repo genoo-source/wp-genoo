@@ -1,0 +1,91 @@
+/*
+	Genoo Editor styles
+*/
+
+.genooFormTemp { margin-bottom: 24px; }
+.genooFormTemp,
+.genooLumensShortcode,
+.genooCTAShortcode,
+.genooFormShortcode
+{
+	border: 1px dashed #888;
+	background: #fff7f2 url("bgShortcode.png") no-repeat scroll center center;
+	background-size: 40px 40px;
+	width: 100%;
+	height: 60px;
+}
+.genooCTAShortcode { background-color: #d3e8ea; }
+.genooLumensShortcode { background-color: #f3d59f; }
+.genooFormShortcode { background-color: #dadada; }
+.genooLeft,
+.genooRight { display: inline-block; width: 45% }
+.genooLeft { padding: 20px; padding-left: 0; float: left;  }
+.genooRight { padding: 20px; padding-right: 0; float: right; }
+
+
+/*
+	WordPress 4 Bene
+*/
+
+.genoo-toolbar,
+#wp-image-toolbar-c,
+#wp-image-toolbar-g { position: absolute; }
+.genoo-toolbar div,
+#wp-image-toolbar-c div,
+#wp-image-toolbar-g div {
+	margin-top: 7px;
+	margin-left: 7px;
+	padding: 2px;
+	width: 30px;
+	height: 30px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	background-color: #000;
+	background-color: rgba(0,0,0,0.9);
+	cursor: pointer;
+	color: white;
+	font-size: 30px;
+}
+.genoo-toolbar div:hover,
+#wp-image-toolbar-c div:hover,
+#wp-image-toolbar-g div:hover {
+	box-shadow: 0 1px 3px rgba(0,0,0,0.8);
+	background-color: #000;
+	color: #2ea2cc;
+}
+
+/*
+	New Shortcodes
+*/
+
+.placeholder-survey {
+	color: #e47829;
+	color: #5f5f5f;
+	background: #f1f1f1;
+}
+.placeholder-cta {
+	color: #5b9dd9;
+	color: #5f5f5f;
+	background: #f1f1f1;
+}
+.placeholder-form {
+	color: #5f5f5f;
+	background: #f1f1f1;
+}
+.placeholder-lumens {
+	color: #e14d43;
+	color: #5f5f5f;
+	background: #f1f1f1;
+}
+
+.gn-sc-plc .dashicons {
+	cursor: move; /* fallback if grab cursor is unsupported */
+	cursor: grab;
+	cursor: -moz-grab;
+	cursor: -webkit-grab;
+}
+.gn-sc-plc:active,
+.gn-sc-plc:active .dashicons {
+	cursor: grabbing;
+	cursor: -moz-grabbing;
+	cursor: -webkit-grabbing;
+}

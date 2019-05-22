@@ -1,0 +1,311 @@
+/* Animations make harveting the styles act weird, just get rid of them */
+.genooForm input.ext-form-input {
+	-webkit-transition: background-color 0s ease !important;
+	-moz-transition: background-color 0s ease !important;
+	-o-transition: background-color 0s ease !important;
+	transition: background-color 0s ease !important;
+}
+
+/* Default genoo popup styles */
+.genooPop{
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+input[type="submit"]{
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+  font-family: BlinkMacSystemFont;
+  font-weight: normal;
+  border: 0px none rgb(50, 50, 50);
+  border-radius: 0px; padding: 11px; background-color: rgb(209, 209, 209);
+}
+
+.genooPopImage{
+  text-align: center;
+  margin-top: 30px;
+}
+
+.req{
+	display: block !important;
+}
+
+/* Make cursor reflect that the modal background can be changed */
+#genooOverlay {
+	cursor: pointer;
+	z-index: 900;
+}
+
+#genooOverlay * {
+	cursor: initial;
+}
+
+/* Make the image able to be centered */
+.genooPopImage{
+  display: block;
+}
+
+/* Resize the image */
+.genooPop .genooPopLeft {
+	width: 260
+}
+
+/* Remove default padding from styler */
+.genooModal .themeDefault{
+	padding: 0;
+}
+
+/* Remove extra background color so that border-radius doesnt give the modal
+   white corners */
+.relative{
+  background-color: transparent !important;
+}
+
+#styler_applied-style #editor-wrapper .inside { padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; }
+#styler_applied-style #editor-wrapper h2 { padding-left: 0; margin-left: 0; font-weight: bold; color: black; }
+.relative-genoo #modalWindowGenoodynamiccta1 .progress-bar { width: 43% !important; }
+/* For styling the radio buttons */
+
+.genoo-row { }
+.genoo-left { display: inline-block; float: left; width: 30%; }
+.genoo-left label { font-width: bold; font-size: .9em; }
+.genoo-left label span { font-weight: bold !important }
+.genoo-right { display: inline-block; float: right; width: 65%; }
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+	content: " "; /* 1 */
+	display: table; /* 2 */
+}
+
+.cf:after {
+	clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+	*zoom: 1;
+}
+
+/**
+ * Range styles
+ */
+
+input[type=range].genoo-range {
+	-webkit-appearance: none;
+	width: 100%;
+	margin: 5.8px 0;
+}
+
+input[type=range].genoo-range:focus {
+	outline: none;
+}
+
+input[type=range].genoo-range::-webkit-slider-runnable-track {
+	width: 100%;
+	height: 6.4px;
+	cursor: pointer;
+	box-shadow: 0.9px 0.9px 1.7px #ffffff, 0px 0px 0.9px #ffffff;
+	background: #dadada;
+	border-radius: 1px;
+	border: 1.1px solid #dadada;
+}
+
+input[type=range].genoo-range::-webkit-slider-thumb {
+	box-shadow: 0px 0px 0px #cecece, 0px 0px 0px #dbdbdb;
+	border: 1.5px solid #cecece;
+	height: 18px;
+	width: 18px;
+	border-radius: 20px;
+	background: #fafafa;
+	cursor: pointer;
+	-webkit-appearance: none;
+	margin-top: -6.9px;
+}
+
+input[type=range].genoo-range:focus::-webkit-slider-runnable-track {
+	background: #f9f9f9;
+}
+
+input[type=range].genoo-range::-moz-range-track {
+	width: 100%;
+	height: 6.4px;
+	cursor: pointer;
+	box-shadow: 0.9px 0.9px 1.7px #ffffff, 0px 0px 0.9px #ffffff;
+	background: #dadada;
+	border-radius: 1px;
+	border: 1.1px solid #dadada;
+}
+
+input[type=range].genoo-range::-moz-range-thumb {
+	box-shadow: 0px 0px 0px #cecece, 0px 0px 0px #dbdbdb;
+	border: 1.5px solid #cecece;
+	height: 18px;
+	width: 18px;
+	border-radius: 20px;
+	background: #fafafa;
+	cursor: pointer;
+}
+
+input[type=range].genoo-range::-ms-track {
+	width: 100%;
+	height: 6.4px;
+	cursor: pointer;
+	background: transparent;
+	border-color: transparent;
+	color: transparent;
+}
+
+input[type=range].genoo-range::-ms-fill-lower {
+	background: #bbbbbb;
+	border: 1.1px solid #dadada;
+	border-radius: 2px;
+	box-shadow: 0.9px 0.9px 1.7px #ffffff, 0px 0px 0.9px #ffffff;
+}
+
+input[type=range].genoo-range::-ms-fill-upper {
+	background: #dadada;
+	border: 1.1px solid #dadada;
+	border-radius: 2px;
+	box-shadow: 0.9px 0.9px 1.7px #ffffff, 0px 0px 0.9px #ffffff;
+}
+
+input[type=range].genoo-range::-ms-thumb {
+	box-shadow: 0px 0px 0px #cecece, 0px 0px 0px #dbdbdb;
+	border: 1.5px solid #cecece;
+	height: 18px;
+	width: 18px;
+	border-radius: 20px;
+	background: #fafafa;
+	cursor: pointer;
+	height: 6.4px;
+}
+
+input[type=range].genoo-range:focus::-ms-fill-lower {
+	background: #dadada;
+}
+
+input[type=range].genoo-range:focus::-ms-fill-upper {
+	background: #f9f9f9;
+}
+
+/**
+ * Basic styles
+ */
+
+.relative-genoo { position: relative; width: 100%; min-height: 800px; }
+#genooOverlay {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 800px;
+}
+.genooModal { position: absolute; }
+.renderedVisible .genooForm .genooGuts { max-height: none; padding: 0; }
+body .genooModal { margin-top: 0; top: 20px; }
+body .genooModal textarea { height: 70px !important; }
+body .genooModal textarea,
+body .genooModal input,
+body .genooModal select,
+body .genooModal .genooPopFooter,
+body .genooModal .genooPopIntro,
+body .genooModal button,
+body .genooModal .genooPopProgress,
+body .genooModal .genooCountdown,
+body .genooModal label {
+	cursor: pointer;
+	position: relative;
+}
+body .genooModal textarea:hover,
+body .genooModal input:hover,
+body .genooModal select:hover,
+body .genooModal .genooPopFooter:hover,
+body .genooModal .genooPopIntro:hover,
+body .genooModal button:hover,
+body .genooModal .genooPopProgress:hover,
+body .genooModal .genooCountdown:hover,
+body .genooModal label:hover {
+	cursor: pointer;
+}
+body .genooModal {
+	background-color: transparent !important;
+}
+body .genooModal > div {
+	background-color: #ffffff;
+}
+
+.hovered-item{
+	position: relative;
+}
+
+/*.timing.hovered-item:hover:not(:active):not(:focus) span::after,*/
+.hovered-item:hover:not(:active):not(:focus)::after{
+	position: absolute;
+	content: ' ';
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #bada55 !important;
+	background: rgba(186, 218, 85, 0.53) !important;
+	cursor: pointer !important;
+	pointer-events: none;
+}
+
+input[type="submit"].hovered-item{
+	cursor: pointer !important;
+}
+
+input:not([type="submit"]).hovered-item:not(:active):not(:focus):hover,
+select.hovered-item:not(:active):not(:focus):hover,
+textarea.hovered-item:not(:active):not(:focus):hover{
+	background: #bada55 !important;
+	background: rgba(186, 218, 85, 0.53) !important;
+	cursor: pointer !important;
+}
+
+#genooOverlay .background-selected{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+#genooOverlay:hover .background-selected{
+	background: #bada55;
+	background: rgba(186, 218, 85, 0.53);
+	pointer-events: none;
+}
+
+#modalWindowGenoodynamiccta1:hover + .background-selected{
+	background: transparent;
+}
+
+/* Media for smaller admin screens */
+@media screen and (max-width: 1150px){
+	.genooModal {
+		position: relative;
+		margin: 0 auto;
+		left: 0;
+		width: 90%;
+	}
+	#genooOverlay.visible {
+		position: relative;
+		height: auto;
+		padding-bottom: 40px;
+	}
+}
