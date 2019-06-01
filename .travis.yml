@@ -3,6 +3,7 @@ php:
 - 7.0
 script:
 - php -l *.php
+
 # branches:
 #   only:
 #   - "/\\d\\.\\d\\.\\d/"
