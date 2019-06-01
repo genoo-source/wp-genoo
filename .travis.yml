@@ -1,0 +1,18 @@
+language: php
+php:
+- 7.0
+script:
+- php -l *.php
+branches:
+  only:
+  - "/\\d\\.\\d\\.\\d/"
+deploy:
+  provider: script
+  script: deploy/deploy.sh
+  on:
+    tags: true
+env:
+  global:
+  - SVN_REPOSITORY=https://plugins.svn.wordpress.org/genoo/
+  - secure: MqqpHgkBxdtWgZhsJJZxbvyjk8QUdlFgcXv7cU0D0ikO+sFOkfwnVdAFbGJJroUQOKf7a670T+0p0TAnNPSxyM3osxmeCRx/ZSRihjVfJTVGkGE6ORHTbX7NQCVDaQfMiqk2gQ1J6GzoPwTTQbfPsKPAYUtuGOY7MZyCyjRKYyr/FfgJraeDsdxodWAjtnnXgMkSA8ZXyjc3VfwVHXg4KCrVH2fH/yaFXbun1C7no+AXKDZyOGD7h47g8hjvj8c+ftUayNrupmoaAsKgOAs+qNqgoeIoiKzAZtToLh5OovPGRb1sIOmicz/HZIRWTbPPI8+s6N2wVPol1LAJFux+F1/qiU7XFLIzkgIlS2R2D7TTbmjrDyUnee07S/7ApbATdw2kvQhNucyiGQnXWH39cyYzHCHWPZ81SFgKduhfK8aBKhbvXQZF+XejN2EQzbMnQv9+ObERT3yH80Z3HNgKGv92waLo2cPbvSQNqjbCHIWyPaGEEieOPhm4HU3fQIZ86tyPtSoUSyu03MadHO0/oDAFweqlebF4IwRFRvU6Gyu/iVzomexIATd+pzyaeS0Hn45yictt5UhZgrdi46ymq3qp2WNiwLgJNy3uiSd7Nexk5Sxxvep1u7WM7YQUhBO2H/XiAjGiwfCsvLEsgXfCuxCvurg6AvNYKdEQeNi6j0Q=
+  - secure: zz402CAkYwuYzCRIycA/U16NPJz9xMhgAsQP+vDhKfOPjdTR3X2DywU9RW1vOltGV2SnmCbLOavrrl5lnF+jj+ygKYjPOxzPtBiP7IxEIIwgNjFVyT2XJnO+V/o/Z3Q0tK3DHwSm91a6HMfxY26OL3t269qCo/Q4Y4sdrZSGdPVX/tZZLr2katyNKaqvyp8+jXytN1vMbHH/vA9mdPrWCzK+CVY61R0KMO/hJ4fpgAFZxWNJfqJP98As/Sr8pYeEEa9/iMeZgW/OhhnU1h+w35TKA7PpZQR19nditTCD7fZ8QD+lZyBTm+6MGuunSQIloR2bxgh6R8o0KvO7V23XHobqMcK/FLHNzCi5+OxlaSVZyG6QxzuWKrTe+O+qGhFmO2cN0WdgpU/fhUXIpa5GjjOy5/SX83cT6/byErq7d9zPfPx7Z0V4wV1ovJFmz8/egfLQwUqmNauLxV22cfTmt1X8n8lNAkR5RMi7uqeiXn1+CVUVlboeNxxXvg3XvUm80Q8XgRKUE0nZqJcCVTYRAQvf6oYNhhwJrw/m8KHXSk6MA4ocyuLxbkO16VOHlKx5UVPejE017RMnzAXsg7ZsBBDxykr5Nb8khDQDx35BTG9yWLGfc/T8lbe1jt4OCGa4QFDYpAel6tZPgCHj1yRbnKOdXUa0G9g/juv5ttghr3Q=
