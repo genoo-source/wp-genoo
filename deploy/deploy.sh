@@ -1,30 +1,31 @@
 #!/usr/bin/env bash
 
-# 1. Clone complete SVN repository to separate directory
-svn co $SVN_REPOSITORY ../svn
+svn co $SVN_REPOSITORY ./svn
 
-# 2. Copy git repository contents to SNV trunk/ directory
-cp -R ./* ../svn/trunk/
+rsync \
+--exclude svn \
+--exclude assets_svn \
+--exclude deploy \
+--exclude .git \
+--exclude README.md \
+--exclude .travis.yml \
+-vaz ./* ./svn/trunk/
 
-# 3. Switch to SVN repository
-cd ../svn/trunk/
+cp -r ./assets_svn/ ./svn/assets/
 
-# 4. Move assets/ to SVN /assets/
-mv ./assets/ ../assets/
+cd svn
 
-# 5. Clean up unnecessary files
-rm -rf .git/
-rm -rf deploy/
-rm .travis.yml
+svn add --force trunk
+svn add --force assets
 
-# 6. Go to SVN repository root
-cd ../
+svn cp \
+trunk tags/$TRAVIS_TAG \
+--username $SVN_USERNAME \
+--password $SVN_PASSWORD
 
-# 7. Create SVN tag
-svn cp trunk tags/$TRAVIS_TAG
-
-# 8. Push SVN tag
-svn ci  --message "Release $TRAVIS_TAG" \
-        --username $SVN_USERNAME \
-        --password $SVN_PASSWORD \
-        --non-interactive
+# 6. Push SVN tag
+svn ci \
+--message "Release $TRAVIS_TAG" \
+--username $SVN_USERNAME \
+--password $SVN_PASSWORD \
+--non-interactive
