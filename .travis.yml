@@ -3,6 +3,7 @@ php:
   - 7.0
 script: 
   - find . -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
+  # - find . -type f -name '*.php' -exec php -l {} \; |grep -v "No syntax errors detected"
 # deploy:
 #   provider: script
 #   script: deploy/deploy.sh

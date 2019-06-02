@@ -1,5 +1,5 @@
 <?php
-
+sytnax error
 /**
  * This file is part of the Genoo plugin.
  *
