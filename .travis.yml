@@ -1,10 +1,8 @@
 language: php
 php:
   - 7.0
-  - 7.1
-before_script:
-  - '! find . -type f -name "*.php" -exec php -d error_reporting=32767 -l {} \; 2>&1 >&- | grep "^"'
-  
+script: 
+  - find . -name "*.php" -print0 | xargs -0 -n1 -P8 php -l
 # deploy:
 #   provider: script
 #   script: deploy/deploy.sh
