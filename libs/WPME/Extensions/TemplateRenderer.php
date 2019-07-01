@@ -87,6 +87,22 @@ class TemplateRenderer extends \WPMKTENGINE\TemplateRenderer
         ), $this->buffer);
         // Shortcodes
         $this->buffer = do_shortcode($this->buffer);
+        // Inject lead id
+        try {
+            $leadIdCookie =  isset($_COOKIE['_gtld']) ? $_COOKIE['_gtld'] : false;
+            $leadIdUrl = isset($_GET['upid']) ? $_GET['upid'] : false;
+            $stringSearchFor = 'survey.load.js?';
+            $arrayOfValues = 'survey.load.js?';
+            if($leadIdCookie){
+                $arrayOfValues .= "_gtld=" . $leadIdCookie . "&";
+            }
+            if($leadIdUrl){
+                $arrayOfValues .= "upid=" . $leadIdUrl . "&";
+            }
+            $this->buffer = str_replace($stringSearchFor, $arrayOfValues, $this->buffer);
+        } catch (\Exception $e){
+            // We do nothing
+        }
         // Add shortcodes to page content for footer to find
         $GLOBALS['post']->post_content = $this->buffer;
         $GLOBALS['post_shortcodes'] = $shortcodeArray;
@@ -112,8 +128,9 @@ class TemplateRenderer extends \WPMKTENGINE\TemplateRenderer
                 <title>'. $title .'</title>
                 <link rel="stylesheet" href="'. WPMKTENGINE_BUILDER . 'stylesheets/render.css" charset="utf-8" />
                 <style type="text/css">
-                '.  $this->appendInline('bootstrap') .'
-                '.  $this->appendInline('frontend.css') .'
+                '. $this->appendInline('bootstrap') .'
+                '. $this->appendInline('frontend.css') .'
+                '. $this->renderWpHead() .'
                 </style>
                 <script type="text/javascript">'.  $this->appendInline('frontend.js') .'</script>
                 '. $this->renderFonts() .'

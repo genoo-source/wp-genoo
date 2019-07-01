@@ -1,0 +1,13 @@
+.wp-block-wpme-cta-gutenberg-block-wpme-cta {
+	/* Replace with your styles. */
+	background-color: #000;
+	color: #fff;
+}
+.loading-placeholder {
+	background: #edeff0;
+	padding: 20px;
+	text-align: center;
+}
+.loading-placeholder .dashicons {
+	font-size: 35px;
+}

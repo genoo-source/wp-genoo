@@ -83,6 +83,7 @@ class WidgetCTA extends \WP_Widget
      * @param array $widget_options
      * @param array $control_options
      */
+    
     function __constructDynamic($id_base, $name, $widget_options = array(), $control_options = array())
     {
         parent::__construct($id_base, $name, $widget_options, $control_options);
