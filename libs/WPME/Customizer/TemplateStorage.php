@@ -79,9 +79,9 @@ class TemplateStorage
             $templateDir = $file;
             $templateInfo = require_once $file . DIRECTORY_SEPARATOR . 'theme.php';
             $templateImage = $this->getThemeFileUrl($themeId, 'theme.jpg');
-            $templateTemplate = '/wp-content/plugins/modal-editor/assets/templates/' . $themeId . '/index.html';
-            $templateJs = '/wp-content/plugins/modal-editor/assets/templates/' . $themeId . '/index.js';
-            $templateStyle = '/wp-content/plugins/modal-editor/assets/templates/' . $themeId . '/style.php';
+            $templateTemplate = $this->getThemeFileUrl($themeId, 'index.html');
+            $templateJs = $this->getThemeFileUrl($themeId, 'index.js');
+            $templateStyle = $this->getThemeFileUrl($themeId, 'style.php');
             // Assign
             return array(
                 'id' => basename($file),

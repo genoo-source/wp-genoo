@@ -94,7 +94,7 @@ class CustomizerSetting extends \WP_Customize_Setting
     {
         // Only if exists, set post_id
         if(isset($_GET['gn-thm'])){
-            $this->theme_id = $_GET['gn-thm'];
+            $this->theme_id = sanitize_text_field($_GET['gn-thm']);
         } else {
             throw new \InvalidArgumentException('No Theme id set for Customizer Setting to be loaded');
         }
