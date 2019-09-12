@@ -79,9 +79,9 @@ class TemplateStorage
             $templateDir = $file;
             $templateInfo = require_once $file . DIRECTORY_SEPARATOR . 'theme.php';
             $templateImage = $this->getThemeFileUrl($themeId, 'theme.jpg');
-            $templateTemplate = '/wp-content/plugins/modal-editor/assets/templates/' . $themeId . '/index.html';
-            $templateJs = '/wp-content/plugins/modal-editor/assets/templates/' . $themeId . '/index.js';
-            $templateStyle = '/wp-content/plugins/modal-editor/assets/templates/' . $themeId . '/style.php';
+            $templateTemplate = $this->getThemeFileUrl($themeId, 'index.html');
+            $templateJs = $this->getThemeFileUrl($themeId, 'index.js');
+            $templateStyle = $this->getThemeFileUrl($themeId, 'style.php');
             // Assign
             return array(
                 'id' => basename($file),
@@ -357,7 +357,7 @@ class TemplateStorage
 
     public function removeSpecificStyleAttributes(&$form)
     {
-        //$form = preg_replace('%style="[^"]+"%i', '', $form, -1);
+        // $form = preg_replace('%style="[^"]+"%i', '', $form, -1);
         $form = preg_replace('/background-color:[ ]{0,1}(#(?:[0-9a-f]{2}){2,4}|(#[0-9a-f]{3})|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))[;]{0,1}/m', '', $form);
         $form = preg_replace('/color:[ ]{0,1}(#(?:[0-9a-f]{2}){2,4}|(#[0-9a-f]{3})|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))[;]{0,1}/m', '', $form);
         // $form = preg_replace('~border:.+?;\s*~', '', $form);
@@ -462,13 +462,10 @@ class TemplateStorage
     public function getThemeFileUrl($themeId, $file)
     {
         // Folder
-        $plugins = plugins_url();
-        $pluginName = defined('GENOO_ROOT') ? 'genoo' : 'wpmktgengine';
         $folder = $this->themeDir . $themeId . DIRECTORY_SEPARATOR . $file;
         // Get file url
         $folderClean = substr(strstr($folder, '/wp-content/'), strlen('/wp-content/'));
         $folderUrl = get_bloginfo('url') . '/wp-content/'. $folderClean;
-        $folderUrl = $plugins . '/' . $pluginName . '/assets/templates/' . $themeId . '/' . $file;
         return $folderUrl;
     }
 

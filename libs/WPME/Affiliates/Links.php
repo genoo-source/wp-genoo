@@ -290,7 +290,7 @@ class Links
             if(!empty(self::$watch)){
                 foreach(self::$watch as $param){
                     if(array_key_exists($param, $_GET)){
-                        $r[$param] = $_GET[$param];
+                        $r[$param] = sanitize_text_field($_GET[$param]);
                     }
                 }
             }

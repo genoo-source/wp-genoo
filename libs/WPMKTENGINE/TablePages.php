@@ -245,7 +245,7 @@ class TablePages extends Table
         }
         if(isset($_GET['genooPagesDelete'])){
             // Template id
-            $template_id = $_GET['genooPagesDelete'];
+            $template_id = sanitize_text_field($_GET['genooPagesDelete']);
             // Prepare
             $this->prepare_items();
             // Go through this
@@ -283,8 +283,8 @@ class TablePages extends Table
         if(isset($_GET) && array_key_exists('genooPagesRename', $_GET) && array_key_exists('genooPagesRenameTitle', $_GET)){
             // If all parameters present
             if(!empty($_GET['genooPagesRename']) && !empty($_GET['genooPagesRenameTitle'])){
-                $id = $_GET['genooPagesRename'];
-                $name = $_GET['genooPagesRenameTitle'];
+                $id = sanitize_text_field($_GET['genooPagesRename']);
+                $name = sanitize_text_field($_GET['genooPagesRenameTitle']);
                 try {
                     $this->repositoryPages->renamePage($id, $name);
                     $this->repositoryPages->flush();

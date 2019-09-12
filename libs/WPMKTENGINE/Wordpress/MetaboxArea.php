@@ -119,7 +119,12 @@ class MetaboxArea extends Metabox
                                     </div>
                                     <div class="genooPopLeft" style="width:auto">
                                         <div class="genooPopImage">
-                                            <img src="http://placehold.it/200x300" class="attachment-medium size-medium" alt="radio-podcast" style="display: inline;">
+                                            <img 
+                                              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsBAMAAAB01OGNAAAAG1BMVEXMzMyWlpacnJyqqqrFxcWxsbGjo6O3t7e+vr6He3KoAAAACXBIWXMAAA7EAAAOxAGVKw4bAAACrUlEQVR4nO3bwW+iQBgF8DcIwhHQ2j0CdXc92u422SNW0zN66JluTOwR3MS9ajfZv3tnBmydVI1R091N3i/xm8JQ3gwD3ACIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiI/ib75lMKzMOiLi9+h0/Y2nEEK4zbcIL4siov3OB7sNzWcYxx32lh0PXCqryGd1Hm2zqO8ZgiRFngeqkLUPZRZsAgg+UbHSdIgFglrTJd5BQ+qH0YLiEio+MEPyFnEsuR93UBvI5TrYB9nRkdJ3FbauiDXBe5/VhGOiNowew4xbgt5wIR6SK3V0FRhci7y+g4QSNcmgNudOqe5/xcM7HjKcxLb63vV88/15o05ZVXN1GZ6SI3yljVeQr4ZsfxSjVG43FI7tqyrgp47XM9J3KYMB5s58Jp6V24i871xMdJkhivKHnqWAY78t1VnOvdFUjGy3acVZdwfsa3MBERERERERERERERERERERERERERERERvRD1738JCcKvh4X4ckuoDxVCqI+dfL1zGM+A+2AKEelPV3bw7S+Hh+jaWWJRh9gf01+yjCapeIL7uDsEd7i5gpW68g8n6UNMfNU0krEKmVyhWciejZDLHLM6pJFVxemLBZrlvhBnep81igF+4GF0CzHVzcNIDUzILi/C7WaI3/OiOsRKq2JHwlo+715Aebms1I68/qT4hq4cs0h108VAhcguzORv/eGIClk0izpErIsv3Hy2O0QuvB5g1MsjdSL1P6rx12vi47lRGDOx5ng7E3yO9sxEHaWGmz/lcvj6TKrZmIk1gRHiXODtmmCc7Q1Ra4JJMc+wSIfqTKp5XRO4l2aI3tB14+7CvodKHSzvLqzSQQo37qlDVfN6d8GNtoRUl3QYrJ+TvSEHaL7HZ0Dzd8gQvXcIIfp3/AGkRYFwrNspcwAAAABJRU5ErkJggg==" 
+                                              class="attachment-medium size-medium" 
+                                              alt="radio-podcast" 
+                                              style="display: inline;"
+                                            >
                                         </div>
                                     </div>
                                     <div class="clear"></div>
