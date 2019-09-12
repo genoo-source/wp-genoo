@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $customizer->title; ?></title>
-    <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <?php wp_head(); ?>
     <script type="text/javascript">
         // Turn off nav menus
