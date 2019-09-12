@@ -768,7 +768,7 @@ class TableLite {
         $current_url = remove_query_arg( 'paged', $current_url );
 
         if ( isset( $_GET['orderby'] ) )
-            $current_orderby = $_GET['orderby'];
+            $current_orderby = sanitize_text_field($_GET['orderby']);
         else
             $current_orderby = '';
 

@@ -121,7 +121,7 @@ class Metabox
             foreach($this->fields as $field){
                 $fieldId = isset($field['id']) ? $field['id'] : str_replace('-', '_', Strings::lower(Strings::webalize($field['label'])));
                 if(!empty($_POST[$fieldId])){
-                    update_post_meta($post_id, $fieldId, ($_POST[$fieldId]));
+                    update_post_meta($post_id, $fieldId, (sanitize_text_field($_POST[$fieldId])));
                 } elseif(empty($_POST[$fieldId])) {
                     delete_post_meta($post_id, $fieldId);
                 }
@@ -157,6 +157,8 @@ class Metabox
                     $fieldDesc = $field['desc'];
                 }
                 if(isset($_GET) && is_array($_GET) && array_key_exists($fieldId, $_GET)){
+                    // WP Reviewers - this prefills value for input, that gets sanatised later
+                    // if sent to submit.
                     $fieldValue = $_GET[$fieldId];
                 }
                 $fieldBefore = isset($field['before']) ? $field['before'] : '';

@@ -499,7 +499,7 @@ class MetaboxBuilder extends Metabox
         if(!current_user_can('edit_post', $post_id)) return;
         if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
         if(isset($_POST['cta_type']) && $_POST['cta_type'] == 'form'){
-            update_post_meta($post_id, 'formpop', $_POST['formpop'] );
+            update_post_meta($post_id, 'formpop', sanitize_text_field($_POST['formpop']));
         } else {
             delete_post_meta($post_id, 'formpop');
         }

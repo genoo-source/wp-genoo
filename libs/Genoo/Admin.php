@@ -552,7 +552,7 @@ class Admin
             Action::add('current_screen', function($screen){
                 if(is_object($screen) && $screen->post_type == 'wpme-landing-pages' && $screen->base == 'edit'){
                     if(array_key_exists('genooMakeLandingHomepage', $_GET) && is_numeric($_GET['genooMakeLandingHomepage'])){
-                        $id = $_GET['genooMakeLandingHomepage'];
+                        $id = sanitize_text_field($_GET['genooMakeLandingHomepage']);
                         RepositoryLandingPages::makePageHomepage($id);
                         Action::add('admin_notices', function(){ echo Notice::type('updated')->text('Default homepage changed.'); }, 10, 1);
                     }
