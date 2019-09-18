@@ -24,6 +24,7 @@ use WPMKTENGINE\Wordpress\Redirect;
 use WPMKTENGINE\Wordpress\Utils;
 use WPMKTENGINE\Wordpress\Widgets;
 use WPMKTENGINE\CTA;
+use WPMKTENGINE\RepositoryLandingPages;
 
 /**
  * Class Frontend
@@ -65,11 +66,26 @@ class Frontend
         Action::add('wp_footer', array($this, 'footerLast'), 999);
         Action::add('shutdown', array($this, 'shutdown'), 10, 1);
         Action::add('template_redirect', array($this, 'template_redirect'), 10, 1);
+        // Custom landing pages link
+        Filter::add('post_type_link', array($this, 'getPostTypeLink'), 99, 2);
+        Filter::add('post_link', array($this, 'getPostTypeLink'), 99, 2);
         // Global header && footer
         Action::add('wp_head', array('\Genoo\RepositorySettings', 'getWordPressGlobalHeader'), 100);
         Action::add('wp_footer', array('\Genoo\RepositorySettings', 'getWordPressGlobalFooter'), 100);
     }
 
+    /**
+     * Fix URL's for landing pages
+    */
+    public function getPostTypeLink($url, $post){
+      // Exit early
+      if($post && $post->post_type !== 'wpme-landing-pages'){
+        return $url;
+      }
+      // This is a landing page
+      $link = get_post_meta($post->ID, 'wpmktengine_landing_url', TRUE);
+      return RepositoryLandingPages::base() . $link;
+    }
 
     /**
      * Template Redirect
