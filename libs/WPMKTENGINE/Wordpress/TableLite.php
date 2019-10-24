@@ -19,6 +19,8 @@
 
 namespace WPMKTENGINE\Wordpress;
 
+use WPMKTENGINE\Wordpress\Utils;
+
 /**
  * Base class for displaying a list of items in an ajaxified HTML table.
  *
@@ -311,7 +313,8 @@ class TableLite {
      * @param string $text The search button text
      * @param string $input_id The search input id
      */
-    public function search_box( $text, $input_id ) {
+    public function search_box( $text, $placeholder = '', $input_id ) {
+        $where = strtok(Utils::getRealUrl(), "&");
         if ( empty( $_REQUEST['s'] ) && !$this->has_items() )
             return;
 
@@ -326,11 +329,13 @@ class TableLite {
         if ( ! empty( $_REQUEST['detached'] ) )
             echo '<input type="hidden" name="detached" value="' . esc_attr( $_REQUEST['detached'] ) . '" />';
         ?>
-        <p class="search-box">
-            <label class="screen-reader-text" for="<?php echo $input_id ?>"><?php echo $text; ?>:</label>
-            <input type="search" id="<?php echo $input_id ?>" name="s" value="<?php _admin_search_query(); ?>" />
-            <?php submit_button( $text, 'button', false, false, array('id' => 'search-submit') ); ?>
-        </p>
+        <form style="display: inline-block" method="POST" action="<?php echo $where; ?>">
+          <p class="search-box">
+              <label class="screen-reader-text" for="<?php echo $input_id ?>"><?php echo $text; ?>:</label>
+              <input type="search" id="<?php echo $input_id ?>" name="s" value="<?php echo $this->get_search_query() ?>" placeholder="<?php echo $placeholder ?>" />
+              <?php submit_button( $text, 'button', false, false, array('id' => 'search-submit') ); ?>
+          </p>
+        </form>
     <?php
     }
 
@@ -345,6 +350,13 @@ class TableLite {
      */
     protected function get_views() {
         return array();
+    }
+
+    /**
+     * Get Search Query
+     */
+    public function get_search_query() {
+      return isset( $_REQUEST['s'] ) ? esc_attr( wp_unslash( $_REQUEST['s'] ) ) : '';
     }
 
     /**
@@ -823,6 +835,10 @@ class TableLite {
         }
     }
 
+    public function get_table_id(){
+      return '';
+    }
+
     /**
      * Display the table
      *
@@ -831,23 +847,19 @@ class TableLite {
      */
     public function display() {
         $singular = $this->_args['singular'];
-
         $this->display_tablenav( 'top' );
-
         ?>
-        <table class="wp-list-table <?php echo implode( ' ', $this->get_table_classes() ); ?>">
+        <table id="<?php echo $this->get_table_id(); ?>" class="wp-list-table <?php echo implode( ' ', $this->get_table_classes() ); ?>">
             <thead>
             <tr>
                 <?php $this->print_column_headers(); ?>
             </tr>
             </thead>
-
             <tfoot>
             <tr>
                 <?php $this->print_column_headers( false ); ?>
             </tr>
             </tfoot>
-
             <tbody id="the-list"<?php
             if ( $singular ) {
                 echo " data-wp-lists='list:$singular'";
@@ -963,14 +975,14 @@ class TableLite {
         list( $columns, $hidden ) = $this->get_column_info();
 
         foreach ( $columns as $column_name => $column_display_name ) {
-            $class = "class='$column_name column-$column_name'";
-
+            $className = isset($item['className']) ? $item['className'] : '';
+            $level = isset($item['level']) ? $item['level'] : 0;
+            $class = "class='$column_name $className column-$column_name'";
             $style = '';
             if ( in_array( $column_name, $hidden ) )
                 $style = ' style="display:none;"';
-
             $attributes = "$class$style";
-
+            $attributes = "$attributes data-level=\"$level\"";
             if ( 'cb' == $column_name ) {
                 echo '<th scope="row" class="check-column">';
                 echo $this->column_cb( $item );

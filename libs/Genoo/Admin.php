@@ -168,7 +168,7 @@ class Admin
     {
         // scripts
         wp_enqueue_style('core', GENOO_ASSETS . 'GenooAdmin.css', null, GENOO_REFRESH);
-        wp_enqueue_script('Genoo', GENOO_ASSETS . 'Genoo.js', null, GENOO_REFRESH, true);
+        wp_enqueue_script('Genoo', GENOO_ASSETS . 'Genoo.js', null, GENOO_REFRESH, false);
         // if post edit or add screeen
         if($hook == 'post-new.php' || $hook == 'post.php'){
             wp_enqueue_script('GenooEditPost', GENOO_ASSETS . 'GenooEditPosts.js', array('jquery'), GENOO_REFRESH);
@@ -183,6 +183,7 @@ class Admin
                 ),
                 'DOMAIN' => GENOO_DOMAIN,
                 'AJAX' => admin_url('admin-ajax.php'),
+                'AJAX_NONCE' => wp_create_nonce('Genoo'),
                 'GenooPluginUrl' => GENOO_ASSETS,
                 'GenooMessages'  => array(
                     'importing'  => __('Importing...', 'genoo'),
@@ -368,6 +369,8 @@ class Admin
             \WPMKTENGINE\Utils\ArrayObject::moveFromPositionToPosition($submenu['Genoo'], 4, 3);
             \WPMKTENGINE\Utils\ArrayObject::moveFromPositionToPosition($submenu['Genoo'], 5, 4);
             \WPMKTENGINE\Utils\ArrayObject::moveFromPositionToPosition($submenu['Genoo'], 6, 5);
+            // Remove Landing pages
+            unset($submenu['Genoo'][6]);
         }
     }
 

@@ -200,7 +200,7 @@ class Cache
                     }
                 }
                 if (!@rmdir($directory)) {
-                    throw new CacheException('Can\'t remove dir (user permissions?)');
+                    throw new CacheException('Can\'t remove dir (user permissions?)', 1000);
                 }
                 return true;
             } else {
@@ -332,7 +332,6 @@ class Cache
      * @param bool $global
      * @return Cache
      */
-
     public function setEnable($enable, $global = false)
     {
         if ($global){
@@ -351,7 +350,6 @@ class Cache
      * @param $dir
      * @return Cache
      */
-
     public function setDir($dir)
     {
         $this->cacheDir = $dir;
@@ -365,7 +363,6 @@ class Cache
      * @param $time
      * @return Cache
      */
-
     public function setTime($time)
     {
         $this->cacheTime = $time;
@@ -379,7 +376,6 @@ class Cache
      * @param null $name
      * @return Cache
      */
-
     public function setCache($name = null)
     {
         if (!$name) {
@@ -396,7 +392,6 @@ class Cache
      * @param $enable
      * @return Cache
      */
-
     public function setHardFind($enable)
     {
         $this->hardFind = $enable;
@@ -409,7 +404,6 @@ class Cache
      *
      * @return bool
      */
-
     public function isEnable(){ return $this->enable; }
 
 
@@ -419,7 +413,6 @@ class Cache
      * @param $cache_name
      * @return bool
      */
-
     public function disableCacheName($cache_name)
     {
         if ($cache_name and !in_array($cache_name, $this->disableCacheName)) {
@@ -439,7 +432,6 @@ class Cache
      * @return bool|CacheException|mixed
      * @throws CacheException
      */
-
     public function getKey($key, $cache_name = null, $check_expiration = false)
     {
         if (!$this->checkKey($key)) {

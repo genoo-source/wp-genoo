@@ -1,8 +1,20 @@
 <?php
 /**
+ * WPME Plugin
+ *
+ * PHP version 5.5
+ *
+ * @category WPMKTGENGINE
+ * @package WPMKTGENGINE
+ * @author  Genoo, LLC <info@genoo.com>
+ * @license https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html GNU General Public License, version 2
+ * @link    https://profiles.wordpress.org/genoo#content-about
+ */
+/**
  * This file is part of the WPMKTGENGINE plugin.
  *
- * Copyright 2016 Genoo, LLC. All rights reserved worldwide.  (web: http://www.wpmktgengine.com/)
+ * Copyright 2016 Genoo, LLC. All rights reserved worldwide.
+ * (web: http://www.wpmktgengine.com/)
  * GPL Version 2 Licensing:
  *  PHP code is licensed under the GNU General Public License Ver. 2 (GPL)
  *  Licensed "As-Is"; all warranties are disclaimed.
@@ -19,20 +31,44 @@
 
 namespace WPMKTENGINE;
 
-
 use WPMKTENGINE\Wordpress\Utils;
 
+/**
+ * Class RepositoryLandingPages
+ *
+ * @package WPMKTENGINE
+ */
 class RepositoryLandingPages
 {
-    /** @var array */
+    /**
+     *
+     *
+     * @var array
+     */
     public $pages;
-    /** @var array */
+    /**
+     *
+     *
+     * @var array
+     */
     public $templates;
-    /** @var bool */
-    public $has = FALSE;
-    /** @type \WP_Query */
+    /**
+     *
+     *
+     * @var bool
+     */
+    public $has = false;
+    /**
+     *
+     *
+     * @type \WP_Query
+     */
     public $homepage;
-    /** @type bool */
+    /**
+     *
+     *
+     * @type bool
+     */
     public $isHomepage;
 
     /**
@@ -57,12 +93,12 @@ class RepositoryLandingPages
      */
     public function iterate()
     {
-        if(!empty($this->pages) && is_array($this->pages)){
-            foreach($this->pages as $key => $page){
+        if (!empty($this->pages) && is_array($this->pages)) {
+            foreach ($this->pages as $key => $page) {
                 $meta = get_post_meta($page->ID);
-                if(is_array($meta) && !empty($meta)){
-                    foreach($meta as $key2 => $value){
-                        if(is_array($value)){
+                if (is_array($meta) && !empty($meta)) {
+                    foreach ($meta as $key2 => $value) {
+                        if (is_array($value)) {
                             $meta[$key2] = $meta[$key2][0];
                         }
                     }
@@ -79,20 +115,14 @@ class RepositoryLandingPages
      */
     public function check()
     {
-        if(!empty($this->pages) && is_array($this->pages)){
-            foreach($this->pages as $page){
-                if(
-                    (isset($page->meta->wpmktengine_landing_url)
-                        &&
-                        !empty($page->meta->wpmktengine_landing_url)
-                    )
-                    &&
-                    (isset($page->meta->wpmktengine_landing_template)
-                        &&
-                        !empty($page->meta->wpmktengine_landing_template))
-                )
-                {
-                    $this->has = TRUE;
+        if (!empty($this->pages) && is_array($this->pages)) {
+            foreach ($this->pages as $page) {
+                if ((isset($page->meta->wpmktengine_landing_url)
+                    && !empty($page->meta->wpmktengine_landing_url))
+                    && (isset($page->meta->wpmktengine_landing_template)
+                    && !empty($page->meta->wpmktengine_landing_template))
+                ) {
+                    $this->has = true;
                     $this->templates[$page->id] = (object)array(
                             'url' => $page->meta->wpmktengine_landing_url,
                             'page' => $page
@@ -100,34 +130,47 @@ class RepositoryLandingPages
                 }
             }
         } else {
-            $this->has = FALSE;
+            $this->has = false;
         }
     }
 
     /**
      * @return bool
      */
-    public function has(){ return $this->has; }
+    public function has()
+    {
+        return $this->has;
+    }
 
     /**
      * @return bool
      */
-    public function hasHomepage(){ return $this->homepage->post_count > 0; }
+    public function hasHomepage()
+    {
+        return $this->homepage->post_count > 0;
+    }
 
     /**
      * @return mixed
      */
-    public function getHomepage(){ return $this->homepage->post; }
+    public function getHomepage()
+    {
+        return $this->homepage->post;
+    }
 
     /**
      * @return mixed
      */
-    public function getHomepageID(){ return $this->homepage->post->ID; }
+    public function getHomepageID()
+    {
+        return $this->homepage->post->ID;
+    }
 
     /**
+     * @param bool $aff
      * @return bool
      */
-    public function isHomepageWP()
+    public function isHomepageWP($aff = false)
     {
         $home = get_home_url();
         $home = rtrim($home, '/');
@@ -153,6 +196,7 @@ class RepositoryLandingPages
             return $obj;
         } else {
             $urlSample = $this->cleanseUrl($urlSample);
+            $urlSample = $this->cleansAffiliates($urlSample);
             foreach ($this->templates as $id => $url) {
                 // Base
                 $base = $this->base();
@@ -184,9 +228,44 @@ class RepositoryLandingPages
      */
     public function cleanseUrl($url)
     {
-        if(!empty($url) && is_string($url)){
+        if (!empty($url) && is_string($url)) {
             $url = strtok($url, '?');
             $url = rtrim($url, '/');
+        }
+        return $url;
+    }
+
+    /**
+     * Checks whether we should check for affialite URL
+     *
+     * @return bool
+     */
+    public static function checkAffiliate()
+    {
+        return function_exists('affiliate_wp');
+    }
+
+    /**
+     * @param $url
+     * @return mixed
+     */
+    public function cleansAffiliates($url)
+    {
+        if (!empty($url) && is_string($url)) {
+            // Affilaite WP?
+            if (function_exists('affiliate_wp')) {
+                $affilaiteVar = affiliate_wp()->settings->get('referral_var', 'ref');
+                $affilaiteVar = apply_filters('affwp_referral_var', $affilaiteVar);
+                // Remove query ref
+                $url = remove_query_arg($affilaiteVar, $url);
+                // Regex for : www.something.com/ref/%username-or-id%
+                // \/ref\/[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$
+                // Regex for : www.something.com?ref=111
+                // [\?|\&]ref=[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*
+                // Replace with: $1
+                $url = preg_replace('/\/' . $affilaiteVar .'\/[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$/', '$1', $url);
+            }
+            return $url;
         }
         return $url;
     }
@@ -201,11 +280,14 @@ class RepositoryLandingPages
     {
         global $wpdb;
         $r = array();
-        if(isset($wpdb)){
-            $results = $wpdb->get_results('SELECT * FROM '. $wpdb->prefix .'postmeta WHERE meta_key = "wpmktengine_landing_template"', OBJECT);
-            if(is_array($results)){
+        if (isset($wpdb)) {
+            $results = $wpdb->get_results(
+              'SELECT 
+                *
+              FROM '. $wpdb->prefix .'postmeta pm JOIN '. $wpdb->prefix .'posts p ON pm.post_id = p.ID WHERE pm.meta_key = "wpmktengine_landing_template" ORDER BY p.post_title ASC', OBJECT);
+            if (is_array($results)) {
                 // Iterate through
-                foreach($results as $result){
+                foreach ($results as $result) {
                     $r[$result->meta_value][] = $result->post_id;
                 }
                 return $r;
@@ -215,39 +297,60 @@ class RepositoryLandingPages
         return $r;
     }
 
+    public static function findDrafts(){
+      return  get_posts(array(
+        'post_type' => 'wpme-landing-pages',
+        'numberposts' => -1,
+        'orderby'=> 'title',
+        'order' => 'ASC',
+        'meta_query' => array(
+          'relation' => 'OR',
+          array(
+            'key' => 'wpmktengine_landing_template',
+            'value' => '',
+            'compare' => '='
+          ),
+          array(
+            'key' => 'wpmktengine_landing_template',
+            'compare' => 'NOT EXISTS'
+          ),
+        )
+      ));
+    }
+
 
     /**
      * Dependencies for each template
      *
-     * @param $template_id
+     * @param  $template_id
      * @return null
      */
     public static function findDependenciesForTemplate($template_id)
     {
         $depenedencies = self::findDependencies();
-        if(Utils::isIterable($depenedencies) && array_key_exists($template_id, $depenedencies)){
+        if (Utils::isIterable($depenedencies) && array_key_exists($template_id, $depenedencies)) {
             return $depenedencies[$template_id];
         }
-        return NULL;
+        return null;
     }
 
 
     /**
      * Dependencies for template with post data
      *
-     * @param $template_id
+     * @param  $template_id
      * @return null|array
      */
     public static function findDependenciesForTemplateWithPost($template_id)
     {
         $depenedencies = self::findDependencies($template_id);
-        if(Utils::isIterable($depenedencies)){
-            foreach($depenedencies as $key => $dependency){
+        if (Utils::isIterable($depenedencies)) {
+            foreach ($depenedencies as $key => $dependency) {
                 $depenedencies[$key] = get_post($depenedency);
             }
             return $depenedencies;
         }
-        return NULL;
+        return null;
     }
 
 
@@ -260,10 +363,10 @@ class RepositoryLandingPages
     {
         $depenedencies = self::findDependencies();
         $r = array();
-        if(Utils::isIterable($depenedencies)){
-            foreach($depenedencies as $key => $dependency){
-                if(Utils::isIterable($dependency)){
-                    foreach($dependency as $key2 => $post){
+        if (Utils::isIterable($depenedencies)) {
+            foreach ($depenedencies as $key => $dependency) {
+                if (Utils::isIterable($dependency)) {
+                    foreach ($dependency as $key2 => $post) {
                         $r[$key][$key2] = get_post($post);
                     }
                 }
@@ -276,13 +379,13 @@ class RepositoryLandingPages
     /**
      * Dependency for a Post
      *
-     * @param $post_id
+     * @param  $post_id
      * @return bool|int|string
      */
     public static function findDependenciesForPost($post_id)
     {
-        $meta = get_post_meta($post_id, 'wpmktengine_landing_template', TRUE);
-        return is_numeric($meta) ? $meta : FALSE;
+        $meta = get_post_meta($post_id, 'wpmktengine_landing_template', true);
+        return is_numeric($meta) ? $meta : false;
     }
 
     /**
@@ -291,11 +394,10 @@ class RepositoryLandingPages
     public static function removeHomepages()
     {
         global $wpdb;
-        $r = FALSE;
-        if(isset($wpdb)){
+        $r = false;
+        if (isset($wpdb)) {
             $delete = $wpdb->delete($wpdb->prefix . 'postmeta', array('meta_key' => 'wpmktengine_landing_homepage'));
-            print_r($delete);
-            return TRUE;
+            return true;
         }
         return $r;
     }
@@ -325,5 +427,8 @@ class RepositoryLandingPages
     /**
      * @return string
      */
-    public static function base(){ return rtrim(get_home_url(), '/') . '/'; }
+    public static function base()
+    {
+        return rtrim(get_home_url(), '/') . '/';
+    }
 }

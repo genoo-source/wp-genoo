@@ -38,6 +38,8 @@ abstract class Table extends \WPMKTENGINE\Wordpress\TableLite
     var $user;
     /** @var \WP_Screen */
     var $screen;
+    /** @var string */
+    var $searchQuery;
 
     /**
      * Constructor
@@ -58,6 +60,7 @@ abstract class Table extends \WPMKTENGINE\Wordpress\TableLite
         $this->screenOptions = $this->screenId == 'Genoo' . $this->tableSingleName ? true : false;
         $this->userPerpage = $this->user->getOption('genoo_per_page');
         $this->perPage = $this->userPerpage ? $this->userPerpage : 50;
+        $this->searchQuery = strtolower($this->get_search_query());
         // bam
         parent::__construct(array_merge(array('singular'=> 'log', 'plural' => 'logs', 'ajax' => false, 'screen' => $this->screen),$args));
     }
@@ -83,16 +86,13 @@ abstract class Table extends \WPMKTENGINE\Wordpress\TableLite
     /**
      * No Items notices
      */
-
     function no_items(){ __('We are sorry, but there are no items to be listed.', 'wpmktengine'); }
 
 
     /**
      * Prepare items
      */
-
     public function prepare_items(){}
-
 
     /**
      * Reordering function.
@@ -101,7 +101,6 @@ abstract class Table extends \WPMKTENGINE\Wordpress\TableLite
      * @param $b
      * @return int
      */
-
     function usort_reorder($a, $b)
     {
         $orderby = (!empty($_GET['orderby'])) ? $_GET['orderby'] : 'id';
@@ -118,7 +117,6 @@ abstract class Table extends \WPMKTENGINE\Wordpress\TableLite
      * @param $column_name
      * @return mixed
      */
-
     function column_default($item, $column_name)
     {
         if(is_array($item) && array_key_exists($column_name, $item)){
@@ -127,13 +125,61 @@ abstract class Table extends \WPMKTENGINE\Wordpress\TableLite
         return '';
     }
 
+    /**
+     * Attach class name
+     */
+    public function attach_class_name(&$item, $level){
+      // Drafts don't count
+      if(method_exists($this, 'isDrafts') && $this->isDrafts($item)){
+        return;
+      }
+      // Extract original classname
+      $className = array_key_exists('className', $item) ? $item['className'] : '';
+      // Add className
+      $item['className'] = $level !== 0 ? $className . ' nested ' . 'nested-level-' . (int)$level : $className;
+      $item['className'] = str_replace('--', '-', $item['className']);
+      $item['level'] = $level;
+    }
+
+    public function single_row($item) {
+      // Keep the alternating class
+      static $level = 0;
+      $this->attach_class_name($item, $level);
+      // Normal rows follow previous logic
+      if(!$this->isFolder($item) || $this->isDrafts($item)){
+        // Render old way
+        parent::single_row($item);
+        // Reset leveling
+        $level = 0;
+        return;
+      }
+      // First level folder
+      parent::single_row($item);
+      // Create a sub-loop of internal items
+      foreach($item as $innerName => $innerValue){
+        if($innerName === $this->repositoryPages::REPO_SORT_NAME){
+          continue;
+        }
+        if($innerName === 'className' || $innerName === 'level'){
+          continue;
+        }
+        $goingDeeper = $this->isFolder($innerValue);
+        $level++;
+        $this->attach_class_name($innerValue, $level);
+        $this->single_row($innerValue);
+      }
+    }
+
+    public function isFolder($item){
+      return !array_key_exists('id', $item);
+    }
+
 
     /**
      * Get notices
      *
      * @return mixed
      */
-
     public function getNotices(){ return $this->notices; }
 
 
