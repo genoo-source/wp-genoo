@@ -160,7 +160,7 @@ class TablePages extends Table
             }
             return $r;
         }
-        return __('No Landing Pages are using this template.', 'wpmktengine');
+        return __('No Landing Pages at this site are using this template.', 'wpmktengine');
     }
 
     public function get_column_name($item){
@@ -221,7 +221,7 @@ class TablePages extends Table
           type=\"text\" 
           placeholder=\"$textSelectNewFolderPlaceholder\" 
           name=\"wpme_page_select_new_folder\" 
-          pattern=\"[a-zA-Z0-9 ]+\"
+          pattern=\"[a-zA-Z0-9 -]+\"
           />
       </label>
       ";
