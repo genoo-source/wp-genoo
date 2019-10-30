@@ -57,7 +57,7 @@ class Nag
         // check
         if(is_string($keys)){
             if(array_key_exists($keys, $_GET) && ($_GET[$keys] == '1') && (current_user_can('install_plugins'))){
-                self::hide($key);
+                self::hide($keys);
             }
         } elseif(is_array($keys)){
             foreach($keys as $key){

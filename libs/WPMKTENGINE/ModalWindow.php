@@ -259,7 +259,10 @@ class ModalWindow
      * @return int
      */
 
-    private function countModals(){ return count($this->modals); }
+    private function countModals(){
+      if(!$this->modals) return 0;
+      return count($this->modals);
+    }
 
 
     /**
