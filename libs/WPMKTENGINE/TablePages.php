@@ -24,6 +24,7 @@ use WPMKTENGINE\Utils\Strings;
 use WPMKTENGINE\Wordpress\Notice;
 use WPMKTENGINE\Tools;
 use WPMKTENGINE\RepositoryLandingPages;
+use WPMKTENGINE\RepositoryPages;
 
 class TablePages extends Table
 {
@@ -159,7 +160,7 @@ class TablePages extends Table
             }
             return $r;
         }
-        return __('No Landing Pages at this site are using this template.', 'wpmktengine');
+        return __('No Landing Pages are using this template.', 'wpmktengine');
     }
 
     public function get_column_name($item){
@@ -169,7 +170,7 @@ class TablePages extends Table
           ? $item[$this->repositoryPages::REPO_SORT_NAME] 
           : __('No title.', 'wpmktengine');      
     }
-
+    
     /**
      * This happens only once and then each row
      * changes the id value with simple `str_replace`
@@ -220,7 +221,7 @@ class TablePages extends Table
           type=\"text\" 
           placeholder=\"$textSelectNewFolderPlaceholder\" 
           name=\"wpme_page_select_new_folder\" 
-          pattern=\"[a-zA-Z0-9 -]+\"
+          pattern=\"[a-zA-Z0-9 ]+\"
           />
       </label>
       ";
@@ -240,7 +241,9 @@ class TablePages extends Table
     }
 
     public static function get_row_id($name){
-      return 'row-' . md5($name);
+      $nameOriginal = RepositoryPages::removeUniqueName($name);
+      $unique = RepositoryPages::extractUniqueName($name);
+      return 'row-' . md5($nameOriginal) . $unique;
     }
 
     /**
@@ -251,7 +254,7 @@ class TablePages extends Table
     {
         $name = $this->get_column_name($item);
         $rowId = self::get_row_id($name);
-
+        $name = RepositoryPages::removeUniqueName($name);
         if($this->isFolder($item)){
            return "
             <span id=\"$rowId\"></span>
@@ -369,9 +372,7 @@ class TablePages extends Table
                     'genooPagesRenameTitle' => ''
                 ));
                 // Convert the value and remove first and last characters
-                $value = json_encode($name);
-                $value = substr($value, 1);
-                $value = substr_replace($value , '', -1);
+                $value = addslashes($name);
                 $r->other = 'onclick="Tool.promptToRename(\''. $title .'\', \''. $url .'=\', \''. $value .'\');"';
                 break;
             case 'move':
@@ -665,10 +666,24 @@ class TablePages extends Table
             $this->_column_headers = array($this->get_columns(), array(), $this->get_sortable_columns());
             // Sort
             $_GET['orderby'] = 'id';
+            // Sort - folders to top (alpha)
             usort($allLogs, function($a, $b){
-              if($this->isFolder($a)){
+              if($this->isFolder($a) && !$this->isFolder($b)){
+                $name = $this->get_column_name($a);
+                $name = RepositoryPages::removeUniqueName($name);
+                // strcmp
                 return -1;
               }
+              // Both folders? Alpha
+              if($this->isFolder($a) && $this->isFolder($b)){
+                $nameA = $this->get_column_name($a);
+                $nameA = RepositoryPages::removeUniqueName($nameA);
+                $nameB = $this->get_column_name($b);
+                $nameB = RepositoryPages::removeUniqueName($nameB);
+                $result = strcmp($nameA, $nameB);
+                return $result;
+              }
+              // No folders, just plain website
               return 1;
             });
             // Paginate

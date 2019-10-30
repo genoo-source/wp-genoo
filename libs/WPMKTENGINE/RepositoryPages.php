@@ -84,6 +84,9 @@ class RepositoryPages extends Repository
     CONST FOLDER_STRUCTURE = 'WPME_LANDING_PAGES_FOLDER_STRUCTURE';
     CONST FOLDER_JS_STRUCTURE = 'WPME_LANDING_PAGES_JS_FOLDER_STRUCTURE';
 
+    CONST FOLDER_UNIQUE_IDENTIFIER_START = '%UNIQUESTART%';
+    CONST FOLDER_UNIQUE_IDENTIFIER_END = '%UNIQUEEND%';
+
     /**
      * @param Cache $cache
      */
@@ -220,6 +223,28 @@ class RepositoryPages extends Repository
       return $ret;
     }
 
+    public static function getUniqueName($name){
+      return $name . self::FOLDER_UNIQUE_IDENTIFIER_START . uniqid() . self::FOLDER_UNIQUE_IDENTIFIER_END;
+    }
+
+    public static function removeUniqueName($name){
+      return preg_replace(
+        '/' 
+        . self::FOLDER_UNIQUE_IDENTIFIER_START 
+        . '[\s\S]+?' 
+        . self::FOLDER_UNIQUE_IDENTIFIER_END
+        . '/', '', $name);
+    }
+
+    public static function extractUniqueName($name){
+      $r = explode(self::FOLDER_UNIQUE_IDENTIFIER_START, $name);
+      if (isset($r[1])){
+          $r = explode(self::FOLDER_UNIQUE_IDENTIFIER_END, $r[1]);
+          return $r[0];
+      }
+      return '';
+    }
+
     /**
      * Get pages for listing table
      *
@@ -237,7 +262,7 @@ class RepositoryPages extends Repository
         $searchQuery,
         function($leafPart, $returnedValue) use ($pagesDependencies) {
           return array(
-            self::REPO_SORT_NAME => $leafPart,
+            self::REPO_SORT_NAME => $this->getUniqueName($leafPart),
             'id' => $returnedValue->id,
             'name' => $returnedValue->name,
             'created' => $returnedValue->create_date,
@@ -314,7 +339,7 @@ class RepositoryPages extends Repository
             $folderName .= $part . ' / ';
             $returnFolderStructure[$folderName] = $folderName;
           }
-          $initArray = array(self::REPO_SORT_NAME => $part);
+          $initArray = array(self::REPO_SORT_NAME => $this->getUniqueName($part));
           if (!isset($parentArr[$part])) {
             $parentArr[$part] = $initArray;
             $parentArrGen[$id] = array();
@@ -357,7 +382,7 @@ class RepositoryPages extends Repository
         $currentDepth = $iterator->getDepth();
         $isNested = $currentDepth > 0;
         // We only care about this field
-        if($key === '__sort_name'){
+        if($key === self::REPO_SORT_NAME){
           $itemId = TablePages::get_row_id($item);
           if(!isset($filtered[$itemId])) $filtered[$itemId] = array();
           // Remember last level with key to match
