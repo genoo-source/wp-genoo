@@ -89,6 +89,15 @@ class TablePages extends Table
       return "<a href=\"$nonce\"><span class=\"dashicons dashicons-trash\"></span></a>";
     }
 
+    public function generate_activate_link($active, $post){
+      $realUrlEmpty = strtok(Utils::getRealUrl(), "?");
+      $realUrl = $realUrlEmpty . "?page=WPMKTENGINEPages";
+      $linkToken = $active ? 'genooDisableLandingHomepage' : 'genooMakeLandingHomepage';
+      $linkText = $active ? 'Disable homepage' : 'Activate Homepage';
+      $link = Utils::addQueryParam($realUrl, $linkToken, $post->ID);
+      return '&nbsp;|&nbsp;<a href="'. $link .'">'. __($linkText, 'wpmktengine') .'</a>';
+    }
+
     public function column_landing($item)
     {
         if($this->isFolder($item)){
@@ -136,10 +145,17 @@ class TablePages extends Table
                     $metaActive = '<span class="genooCross">&times;</span>';
                 }
                 $r .= "<td>". $metaActive ."</td>";
-
                 // HOMEPAGE
-                $r .= "<td><span class=\"genooCross\">&times;</span></td>";
-
+                $metaActiveHome = get_post_meta($post->ID, 'wpmktengine_landing_homepage', true);
+                $metaActiveHome = $metaActiveHome === 'true';
+                $r .= "<td>";
+                if($metaActiveHome){
+                  $r .= "<span class=\"genooTick active\">&times;</span>";
+                } else {
+                  $r .= "<span class=\"genooCross\">&times;</span>";
+                }
+                $r .= $this->generate_activate_link($metaActiveHome, $post);
+                $r .= "</td>";
                 // REDIRECT
                 $metaUrlActive = get_post_meta($post->ID, 'wpmktengine_landing_redirect_active', true);
                 $metaUrl = get_post_meta($post->ID, 'wpmktengine_landing_redirect_url', true);

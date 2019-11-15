@@ -553,7 +553,7 @@ class Admin
                 return $actions;
             }, 10, 2);
             Action::add('current_screen', function($screen){
-                if(is_object($screen) && $screen->post_type == 'wpme-landing-pages' && $screen->base == 'edit'){
+                if(is_object($screen) && $screen->id == 'genoo_page_WPMKTENGINEPages'){
                     if(array_key_exists('genooMakeLandingHomepage', $_GET) && is_numeric($_GET['genooMakeLandingHomepage'])){
                         $id = sanitize_text_field($_GET['genooMakeLandingHomepage']);
                         RepositoryLandingPages::makePageHomepage($id);
