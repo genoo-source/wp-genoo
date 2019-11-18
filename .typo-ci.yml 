@@ -1,3 +1,13 @@
+
+# Any files/folders we should ignore?
+excluded_files:
+  - "vendor/**/*"
+  - "node_modules/**/*"
+  - "package-lock.json"
+  - "yarn.lock"
+  - "Gemfile.lock"
+  - ".typo-ci.yml"
+  
 # Any typos we should ignore?
 excluded_words:
   - Genoo
