@@ -293,7 +293,7 @@ class RepositoryPages extends Repository
       $canHide = $searchQuery !== '';
       foreach ($array as $key => $val) {
         $val = (object)$val;
-        $name = strtolower($val->name);
+        $name = $val->name;
         $id = strtolower($val->id);
         $parts	= preg_split($splitRE, $name, -1, PREG_SPLIT_NO_EMPTY);
         $partsCount = count($parts);

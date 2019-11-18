@@ -39,8 +39,8 @@ if (!defined('ABSPATH')) { exit; }
  * on some outdated installation.
  */
 
-// require_once('GenooCheck.php');
-// GenooCheck::checkRequirements();
+require_once('GenooCheck.php');
+GenooCheck::checkRequirements();
 
 /**
  * 3. Activation / deactivation

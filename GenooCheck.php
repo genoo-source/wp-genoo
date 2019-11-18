@@ -25,7 +25,7 @@ class GenooCheck
         $memoryLimit = !(defined('WP_CLI') && WP_CLI) ? GenooCheck::getMemoryLimit() : 128 * (1024 * 1024);
         // minimum versions
         $checkMinWp  = '4.5';
-        $checkMinPHP = '5.4';
+        $checkMinPHP = '5.5.0';
         $checkMinMemory = 20 * (1024 * 1024);
         // recover hideLink
         $recoverLink = '<br /><br /><a href="'. admin_url('plugins.php') .'">' . __('Back to plugins.', 'genoo') . '</a>';

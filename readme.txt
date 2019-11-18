@@ -2,7 +2,7 @@
 Contributors: Genoo,latorante
 Tags: marketing automation, email marketing, centralized lead database, lead capture forms
 Requires at least: 4.6
-Tested up to: 5.2.1
+Tested up to: 5.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Stable tag: 5.7.18
@@ -68,6 +68,9 @@ Not a Genoo customer yet? Let's get your ["30-Day Free Trial"](http://www.genoo.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 5.7.18 =
+* Bugfix a folder name parser
 
 = 5.7.9 = 
 * Fix CSS bug introduced because of another CSS bug
