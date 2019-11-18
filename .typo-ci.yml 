@@ -1,0 +1,4 @@
+# Any typos we should ignore?
+excluded_words:
+  - Genoo
+  - WPMKTENGINE
