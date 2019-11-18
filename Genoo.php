@@ -5,7 +5,7 @@
     Author:  Genoo, LLC
     Author URI: http://www.genoo.com/
     Author Email: info@genoo.com
-    Version: 5.7.18
+    Version: 5.7.19
     License: GPLv2
     Text Domain: genoo
 */
@@ -39,8 +39,8 @@ if (!defined('ABSPATH')) { exit; }
  * on some outdated installation.
  */
 
-// require_once('GenooCheck.php');
-// GenooCheck::checkRequirements();
+require_once('GenooCheck.php');
+GenooCheck::checkRequirements();
 
 /**
  * 3. Activation / deactivation
