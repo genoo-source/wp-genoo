@@ -79,9 +79,9 @@ class Genoo
         // Dropins
         require_once GENOO_ROOT . '/extensions/dropins.php';
         if(\WPMKTENGINE\Wordpress\Utils::isSecure()){
-            define('WPMKTENGINE_BUILDER', 'https://genoolabs.com/pagebuilderdev-clickanddrop/');
+            define('WPMKTENGINE_BUILDER', 'https://genoolabs.com/simplepagebuilder/');
         } else {
-            define('WPMKTENGINE_BUILDER', 'http://genoolabs.com/pagebuilderdev-clickanddrop/');
+            define('WPMKTENGINE_BUILDER', 'http://genoolabs.com/simplepagebuilder/');
         }
         define('WPMKTENGINE_LEAD_COOKIE', '_gtld');
         define('GENOO_DEV', apply_filters('wpmktengine_dev', FALSE));

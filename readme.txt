@@ -5,7 +5,7 @@ Requires at least: 4.6
 Tested up to: 5.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 5.7.19
+Stable tag: 5.7.20
 
 Combine the flexibility of WordPress with the power of Genoo and experience amazing results!
 
@@ -72,16 +72,16 @@ Not a Genoo customer yet? Let's get your ["30-Day Free Trial"](http://www.genoo.
 = 5.7.18 =
 * Bugfix a folder name parser
 
-= 5.7.9 = 
+= 5.7.9 =
 * Fix CSS bug introduced because of another CSS bug
 
-= 5.7.8 = 
+= 5.7.8 =
 * Parse CSS to avoid non-valid-css error
 
-= 5.7.7 = 
+= 5.7.7 =
 * WP_Error as response is a no no
 
-= 5.7.6 = 
+= 5.7.6 =
 * Fix image position
 
 = 5.7.5 =
