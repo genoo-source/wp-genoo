@@ -121,8 +121,12 @@ class Metabox
             foreach($this->fields as $field){
                 $fieldId = isset($field['id']) ? $field['id'] : str_replace('-', '_', Strings::lower(Strings::webalize($field['label'])));
                 if(!empty($_POST[$fieldId])){
-                    update_post_meta($post_id, $fieldId, (sanitize_text_field($_POST[$fieldId])));
-                } elseif(empty($_POST[$fieldId])) {
+                    if(in_array($fieldId, array('wpmktengine_data_header', 'wpmktengine_data_footer'))){
+                      update_post_meta($post_id, $fieldId, $_POST[$fieldId]);
+                    } else {
+                      update_post_meta($post_id, $fieldId, (sanitize_text_field($_POST[$fieldId])));
+                    }
+                  } elseif(empty($_POST[$fieldId])) {
                     delete_post_meta($post_id, $fieldId);
                 }
             }
