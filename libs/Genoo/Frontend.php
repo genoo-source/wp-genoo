@@ -309,7 +309,7 @@ class Frontend
             }
             // WPMKTENGINE Landing pages
             $redirects = new \WPMKTENGINE\RepositoryLandingPages();
-            if($redirects->has()){
+            if($redirects->has() && !wp_doing_ajax()){
                 $does = $redirects->fitsUrl(Utils::getRealUrl());
                 if($does !== FALSE){
                     // OK, it seems like we have a winner
