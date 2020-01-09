@@ -220,8 +220,8 @@ class RepositoryForms extends Repository
             $regex = array(
                 "`^([\t\s]+)`ism"=>'',
                 "`^\/\*(.+?)\*\/`ism"=>"",
-                "`([\n\A;]+)\/\*(.+?)\*\/`ism"=>"$1",
-                "`([\n\A;\s]+)//(.+?)[\n\r]`ism"=>"$1" . PHP_EOL,
+                //"`([\n\A;]+)\/\*(.+?)\*\/`ism"=>"$1",
+                //"`([\n\A;\s]+)//(.+?)[\n\r]`ism"=>"$1" . PHP_EOL,
                 "`(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+`ism"=> PHP_EOL
             );
             $prefixedCss = preg_replace(array_keys($regex), $regex, $prefixedCss);
