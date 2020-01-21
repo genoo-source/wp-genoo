@@ -397,7 +397,7 @@ class Api implements \WPME\ApiInterface
      */
 
     public function getLeadTypes(){
-	return $this->call(self::GET_LEADS_TYPES);
+	    return $this->call(self::GET_LEADS_TYPES);
         global $WPME_CACHE;
         try{
             if (!$prepLeadTypes = $WPME_CACHE->get('leadtypes', 'settings')){
