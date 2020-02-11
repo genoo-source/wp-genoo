@@ -234,8 +234,6 @@ Api.listener = function(event) {
     return;
   }
   // Event origin
-  //if(event.origin !== "https://wpmedev.odportals.com"){ console.log('Wrong origin: ' + event.origin); return; }
-  //if(event.origin !== "https://wpmeapp.genoo.com"){ console.log('Wrong origin: ' + event.origin); return; }
   if (event.origin !== "https:" + GenooVars.DOMAIN) {
     console.log("Wrong origin: " + event.origin);
     return;

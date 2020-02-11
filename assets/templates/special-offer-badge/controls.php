@@ -60,9 +60,7 @@ $customizerModalSettings->addField('gn-modal-image')
           return
               "
                   wp.customize('{$that->fieldId}', function(value){
-                      console.log(value);
                       value.bind(function(to){
-                          console.log(to);
                           jQuery('.top-left-featured-image').attr('src', to);
                       });
                   });

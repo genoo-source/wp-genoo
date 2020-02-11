@@ -373,7 +373,6 @@ class MetaboxBuilder extends Metabox
                     // Get block
                     var Block = jQuery('.bField[data-block="'+ Target +'"]')[0];
                     var BlockPlaceholder = jQuery(Block).attr('data-title');
-                    console.log(Block);
                     // Block action
                     if(IsSelect && jQuery(this).val() == ''){
                         jQuery(Block).html('');

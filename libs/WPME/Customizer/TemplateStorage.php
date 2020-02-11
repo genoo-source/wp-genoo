@@ -191,16 +191,6 @@ class TemplateStorage
                 ),
                 $themeCss
             );
-            // Remove CSS comments
-            $regex = array(
-                "`^([\t\s]+)`ism"=>'',
-                "`^\/\*(.+?)\*\/`ism"=>"",
-                "`([\n\A;]+)\/\*(.+?)\*\/`ism"=>"$1",
-                "`([\n\A;\s]+)//(.+?)[\n\r]`ism"=>"$1\n",
-                "`(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+`ism"=>"\n"
-            );
-            // Remove comments
-            $themeCss = preg_replace(array_keys($regex), $regex, $themeCss);
             // Append global styles
             global $WPME_STYLES;
             $WPME_STYLES .= $themeCss;
@@ -257,16 +247,6 @@ class TemplateStorage
                 ),
                 $themeCss
             );
-            // Remove CSS comments
-            $regex = array(
-                "`^([\t\s]+)`ism"=>'',
-                "`^\/\*(.+?)\*\/`ism"=>"",
-                "`([\n\A;]+)\/\*(.+?)\*\/`ism"=>"$1",
-                "`([\n\A;\s]+)//(.+?)[\n\r]`ism"=>"$1\n",
-                "`(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+`ism"=>"\n"
-            );
-            // Remove comments
-            $themeCss = preg_replace(array_keys($regex), $regex, $themeCss);
             // Append global styles
             global $WPME_STYLES;
             $WPME_STYLES .= $themeCss;
