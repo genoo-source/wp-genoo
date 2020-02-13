@@ -157,7 +157,7 @@ abstract class Table extends \WPMKTENGINE\Wordpress\TableLite
       parent::single_row($item);
       // Create a sub-loop of internal items
       foreach($item as $innerName => $innerValue){
-        if($innerName === $this->repositoryPages::REPO_SORT_NAME){
+        if($innerName === \WPMKTENGINE\RepositoryPages::REPO_SORT_NAME){
           continue;
         }
         if($innerName === 'className' || $innerName === 'level'){

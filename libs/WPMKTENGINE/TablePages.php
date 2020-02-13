@@ -180,10 +180,10 @@ class TablePages extends Table
     }
 
     public function get_column_name($item){
-      return isset($item[$this->repositoryPages::REPO_SORT_NAME]) 
-        && !empty($item[$this->repositoryPages::REPO_SORT_NAME]) 
-        && $item[$this->repositoryPages::REPO_SORT_NAME] !== 'undefined' 
-          ? $item[$this->repositoryPages::REPO_SORT_NAME] 
+      return isset($item[\WPMKTENGINE\RepositoryPages::REPO_SORT_NAME]) 
+        && !empty($item[\WPMKTENGINE\RepositoryPages::REPO_SORT_NAME]) 
+        && $item[\WPMKTENGINE\RepositoryPages::REPO_SORT_NAME] !== 'undefined' 
+          ? $item[\WPMKTENGINE\RepositoryPages::REPO_SORT_NAME] 
           : __('No title.', 'wpmktengine');      
     }
     
@@ -192,7 +192,7 @@ class TablePages extends Table
      * changes the id value with simple `str_replace`
      */
     private function make_folder_html(){
-      $folderStructure = $GLOBALS[$this->repositoryPages::FOLDER_STRUCTURE];
+      $folderStructure = $GLOBALS[\WPMKTENGINE\RepositoryPages::FOLDER_STRUCTURE];
       $realUrlEmpty = strtok(Utils::getRealUrl(), "?");
       $realUrl = $realUrlEmpty . "?page=WPMKTENGINEPages";
       $appendedUrl = Utils::addQueryParams($realUrl, array(
@@ -335,7 +335,7 @@ class TablePages extends Table
         return null;
       }
       return array(
-        $this->repositoryPages::REPO_SORT_NAME => $drafts,
+        \WPMKTENGINE\RepositoryPages::REPO_SORT_NAME => $drafts,
         'name' => $drafts,
         'isDrafts' => true,
         'className' => $isSearch ? '' : 'highlight',
@@ -565,7 +565,7 @@ class TablePages extends Table
               // Get all folders
               var folders = document.querySelectorAll('#wpme-landing-pages .wpme-folder-switch');
               // Hide, show and attach handlers
-              var folderDependencies = JSON.parse('" . json_encode($GLOBALS[$this->repositoryPages::FOLDER_JS_STRUCTURE]) . "');
+              var folderDependencies = JSON.parse('" . json_encode($GLOBALS[\WPMKTENGINE\RepositoryPages::FOLDER_JS_STRUCTURE]) . "');
               // Figure out if open or close, close on default
               var foldersToCollapse = document.querySelectorAll('#wpme-landing-pages .nested');
               for (i = 0; i < foldersToCollapse.length; ++i) {
