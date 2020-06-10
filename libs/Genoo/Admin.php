@@ -105,6 +105,7 @@ class Admin
         Action::add('admin_menu', array($this, 'adminMenu'), 99);
         Action::add('admin_notices', array ($this, 'adminNotices'));
         Action::add('admin_enqueue_scripts', array($this, 'adminEnqueueScripts'), 10, 1);
+        Action::add('elementor/editor/before_enqueue_scripts', array($this, 'adminEnqueueScripts'), 10);
         Action::add('admin_head', array($this, 'adminHead'), 10);
         Action::add('do_meta_boxes', array($this, 'removeMetaboxes'), 10000); // remove metaboxes
         Action::add('wp_print_scripts', array($this, 'removeDequeue'), 10000); // remove hooks colliding
@@ -380,13 +381,13 @@ class Admin
     public function removeMetaboxes()
     {
 	    // Listly
-        remove_meta_box('ListlyMetaBox', 'wpme-landing-pages', 'side');
-        remove_meta_box('ListlyMetaBox', 'cta', 'side');
-        remove_meta_box('ListlyMetaBox', 'wpme-styles', 'side');
+      remove_meta_box('ListlyMetaBox', 'wpme-landing-pages', 'side');
+      remove_meta_box('ListlyMetaBox', 'cta', 'side');
+      remove_meta_box('ListlyMetaBox', 'wpme-styles', 'side');
 	    // Redirect
-        remove_meta_box('edit-box-ppr', 'wpme-styles', 'normal');
-        remove_meta_box('edit-box-ppr', 'cta', 'normal');
-        remove_meta_box('edit-box-ppr', 'wpme-landing-pages', 'normal');
+      remove_meta_box('edit-box-ppr', 'wpme-styles', 'normal');
+      remove_meta_box('edit-box-ppr', 'cta', 'normal');
+      remove_meta_box('edit-box-ppr', 'wpme-landing-pages', 'normal');
 	    // Yoast SEO
 	    remove_meta_box('wpseo_meta', 'cta', 'normal');
 	    remove_meta_box('wpseo_meta', 'wpme-styles', 'normal');
