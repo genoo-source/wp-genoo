@@ -309,7 +309,10 @@ class Frontend
             }
             // WPMKTENGINE Landing pages
             $redirects = new \WPMKTENGINE\RepositoryLandingPages();
-            if($redirects->has() && !wp_doing_ajax()){
+            $isDivi = $redirects->hasHomepage() && $redirects->isHomepageWP();
+            $isDivi = $isDivi && is_array($_GET) && (array_key_exists('et_bfb', $_GET) || array_key_exists('et_fb', $_GET));
+            $isElementor = is_array($_GET) && array_key_exists('elementor-preview', $_GET);
+            if($redirects->has() && !wp_doing_ajax() && !$isDivi && !$isElementor){
                 $does = $redirects->fitsUrl(Utils::getRealUrl());
                 if($does !== FALSE){
                     // OK, it seems like we have a winner

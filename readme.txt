@@ -5,7 +5,7 @@ Requires at least: 4.6
 Tested up to: 5.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 5.8.0
+Stable tag: 5.8.1
 
 Combine the flexibility of WordPress with the power of Genoo and experience amazing results!
 
@@ -69,7 +69,7 @@ Not a Genoo customer yet? Let's get your ["30-Day Free Trial"](http://www.genoo.
 
 == Changelog ==
 
-= 5.8.0 = 
+= 5.8.1 = 
 * Elementor support
 
 = 5.7.85 =
