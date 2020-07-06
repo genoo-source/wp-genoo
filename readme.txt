@@ -69,6 +69,9 @@ Not a Genoo customer yet? Let's get your ["30-Day Free Trial"](http://www.genoo.
 
 == Changelog ==
 
+= 5.8.2 =
+* Fix for ref/ urls on landing pages
+
 = 5.8.1 = 
 * Elementor support
 
