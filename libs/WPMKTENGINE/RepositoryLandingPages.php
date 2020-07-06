@@ -175,6 +175,16 @@ class RepositoryLandingPages
         $home = get_home_url();
         $home = rtrim($home, '/');
         $current = Utils::getRealUrl();
+        if(function_exists('affiliate_wp')){
+          try {
+            $refName = affiliate_wp()->settings->get('referral_var', 'ref');
+            $refName = $refName . '/';
+            if (strpos($current, $refName) !== false) {
+                $current = substr($current, 0, strpos($current, $refName));
+            }
+          } catch (\Exception $e){
+          }
+        }
         $current = strtok($current, '?');
         $current = rtrim($current, '/');
         return $home == $current;
