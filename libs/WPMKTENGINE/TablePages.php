@@ -128,7 +128,8 @@ class TablePages extends Table
                 $link = admin_url('post.php?post='. $post->ID .'&action=edit');
                 $class = $counter > $counterMax ? "class='next hidden'" : "\"class='next'";
                 $r .= "<tr $class>";
-                $r .= "<td><a href=\"". $link ."\">". $post->post_title ."</a></td>";
+                $title = empty($post->post_title) ? "No Title." : $post->post_title;
+                $r .= "<td><a href=\"". $link ."\">". $title ."</a></td>";
 
                 // URL
                 $metaURL = get_post_meta($post->ID, 'wpmktengine_landing_url', true);
