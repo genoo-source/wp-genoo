@@ -1218,7 +1218,7 @@ class Api implements \WPME\ApiInterface
                 $this->http->put(Json::encode($params));
                 break;
             case 'DELETE':
-                $this->http->delete();
+                $this->http->delete(Json::encode($params));
                 break;
             case 'PATCH':
                 break;
