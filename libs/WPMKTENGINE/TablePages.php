@@ -66,7 +66,7 @@ class TablePages extends Table
     {
         return array(
             'name' => __('Template name', 'wpmktengine'),
-            'landing' => 'Used by Landing Pages',
+            'landing' => 'Used by URL\'s',
         );
     }
 
@@ -177,7 +177,7 @@ class TablePages extends Table
             }
             return $r;
         }
-        return __('No Landing Pages at this site are using this template.', 'wpmktengine');
+        return __('No URL\'s at this site are using this template.', 'wpmktengine');
     }
 
     public function get_column_name($item){
@@ -373,7 +373,7 @@ class TablePages extends Table
                 break;
             case 'create':
                 $r->href = $this->getNewLandingPageLink($id);
-                $r->title = 'Create a Landing Page';
+                $r->title = 'Create a URL';
                 break;
             case 'prev':
                 $r->href = Utils::addQueryParam(WPMKTENGINE_HOME_URL, 'genooIframeBuidler', $id);
@@ -442,7 +442,7 @@ class TablePages extends Table
                 <form style="display: inline; margin: 0" method="POST" action="'. $where .'">
                   <input type="submit" name="genooPagesFlushCache" id="submit" class="button alignCenter genooExtraNav" value="'. __('Sync Templates', 'wpmktengine') .'">
                   <a target="_blank" class="button button-primary genooExtraNav" href="'. WPMKTENGINE_BUILDER_NEW .'">'. __('Add new Page Template', 'wpmktengine') .'</a>
-                  <a href="'. $whereNewLandingPage .'" class="button button-primary genooExtraNav">'. __('Add new Landing Page', 'wpmktengine') .'</a>
+                  <a href="'. $whereNewLandingPage .'" class="button button-primary genooExtraNav">'. __('Add new URL', 'wpmktengine') .'</a>
                 </form>
               </div>
             ';
