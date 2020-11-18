@@ -51,6 +51,7 @@ class TemplateRenderer
     var $ctasAlign = array();
     /** @var array */
     var $ctasReplace = array();
+    var $bodyClass = '';
     /** @var array */
     var $ids = array();
     /** @var */
@@ -406,7 +407,7 @@ class TemplateRenderer
                         )),
                     1 => '<div id="%meta.id%" class="handle">%meta.text%</div>',
                 ),
-            )
+        )
         );
     }
 
@@ -448,6 +449,28 @@ class TemplateRenderer
             $r = $inlineStyles;
         }
         return $r;
+    }
+
+    /**
+     * @param $content
+     */
+    public function setBodyClass($content)
+    {
+        global $post;
+        // Old
+        $old = $post->post_content;
+        // Set new
+        $post->post_content = $content;
+        $this->bodyClass = $this->getBodyClass();
+        $post->post_content = $old;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBodyClass()
+    {
+        return join(' ', get_body_class());
     }
 
     /**
@@ -531,7 +554,7 @@ class TemplateRenderer
                                     if ( gettype( $current_col[1] ) == 'string' || gettype( $current_col[1] ) == 'undefined') {
                                         $partition_to_generate = array(
                                             0 => array(
-                                                width => "1_1"
+                                                'width' => "1_1"
                                             ),
                                         );
                                         for ( $lonely_item = 1; $lonely_item < count( $current_col ); $lonely_item++ ) {
@@ -546,7 +569,7 @@ class TemplateRenderer
 
                                     for ( $partition_column = 1; $partition_column < count( $current_col ); $partition_column++ ) {
                                         $partition_column_width =
-                                            $current_col[$partition_column][0] -> width;
+                                            $current_col[$partition_column][0]->width;
 
                                         $r .= '<div class="pane sortable-column ui-sortable partition-column__'.$partition_column_width.'">';
 
@@ -1100,6 +1123,7 @@ class TemplateRenderer
      */
     public function beforeRenderer()
     {
+        $globalPost = $GLOBALS['post'];
         // Initiate HTML
         // prep
         $this->dom->loadHTML('<?xml encoding="utf-8" ?><!DOCTYPE html>' . $this->buffer);
@@ -1110,7 +1134,9 @@ class TemplateRenderer
         global $post;
         $postPrep = new \stdClass();
         $postPrep->ID = 1;
-        $post = new \WP_Post($postPrep);
+        $post = $globalPost instanceof \WP_Post ? $globalPost : new \WP_Post($postPrep);
+        // Template redirect?
+        do_action('template_redirect_wpme');
         // This is needed for Frontend class to react and append modal windows
         $post->post_type = 'wpme-landing-pages';
         $post->post_content = '';
@@ -1202,6 +1228,7 @@ class TemplateRenderer
                 $this->buffer = str_replace($shortcode, $shortcodeValue, $this->buffer);
             }
         }
+        $this->setBodyClass($this->buffer);
         // Clean errors
         libxml_clear_errors();
         // Remove this please, it's just terrible and causes issue.
@@ -1382,10 +1409,10 @@ class TemplateRenderer
         // Add it manually
         // Render
         echo '<!DOCTYPE html>
-        <html>
-            <head>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <html lang="en">
+          <head>
+	              <meta charset="utf-8">
+	              <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
                 <title>'. $title .'</title>
                 <link rel="stylesheet" href="'. WPMKTENGINE_BUILDER . 'stylesheets/render.css" charset="utf-8" />
                 <style type="text/css">
@@ -1420,7 +1447,7 @@ class TemplateRenderer
                 '. \WPMKTENGINE\Utils\CSS::START . $cssStyles . \WPMKTENGINE\Utils\CSS::END .'
                 '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('header') .'
             </head>
-            <body id="body" style="'. $this->getBodyStyle() .'">
+            <body id="body" class="'. $this->bodyClass .'" style="'. $this->getBodyStyle() .'">
                 <div>'. $this->buffer .'</div>
                 '. $additionalFooter .'
                 '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('footer') .'';

@@ -694,62 +694,6 @@ class Admin
                 );
             }
             new MetaboxCTA('Genoo Dynamic CTA', $this->repositarySettings->getCTAPostTypes(), array(), $this->repositarySettings->getCTAs());
-            // Dynamic PopOver
-            new Metabox('Genoo Dynamic Pop-Over', $this->repositarySettings->getCTAPostTypes(),
-                array(
-                    array(
-                        'type' => 'select',
-                        'label' => __('Enable Pop-Over to open automatically', 'genoo'),
-                        'options' => array('Disable', 'Enable')
-                    ),
-                    array(
-                        'type' => 'select',
-                        'label' => __('CTA', 'genoo'),
-                        'id' => 'pop_over_cta_id',
-                        'options' => $this->repositaryCTAs->getArray()
-                    ),
-                    array(
-                        'type' => 'number',
-                        'label' => __('Open Pop-Up after delay (seconds)', 'genoo'),
-                        'id' => 'number_of_seconds_to_open_the_pop_up_after'
-                    ),
-                    array(
-                        'type' => 'checkbox',
-                        'label' => __('Only display to unknown leads?', 'wpmktengine'),
-                        'id' => 'pop_over_only_for_unknown'
-                    ),
-                )
-            );
-            // Referer URL redirect
-            new Metabox('Genoo Referer URL Redirect', array('post', 'page'),
-                array(
-                    array(
-                        'type' => 'select',
-                        'label' => __('Enable Referer Redirect', 'genoo'),
-                        'options' => array('Disable', 'Enable'),
-                        'id' => 'genoo_referer_redirect'
-                    ),
-                    array(
-                        'type' => 'select',
-                        'label' => __('Enable when', 'genoo'),
-                        'options' => array(
-                            'referer_not' => __('user has not come from referer', 'genoo'),
-                            'referer_yes' => __('user has come from referer', 'genoo'),
-                        ),
-                        'id' => 'genoo_referer_redirect_when'
-                    ),
-                    array(
-                        'type' => 'text',
-                        'label' => __('Referer URL', 'genoo'),
-                        'id' => 'genoo_referer_redirect_from_url'
-                    ),
-                    array(
-                        'type' => 'text',
-                        'label' => __('Redirect to URL', 'genoo'),
-                        'id' => 'genoo_referer_redirect_url'
-                    )
-                )
-            );
             // Landing pages UI
             // Required homepage?
             new Metabox('Settings', array('wpme-landing-pages'),
@@ -796,6 +740,66 @@ class Admin
                         'type' => 'textarea',
                         'label' => __('Additional footer data', 'wpmktengine'),
                         'id' => 'wpmktengine_data_footer'
+                    )
+                )
+            );
+            // Dynamic PopOver
+            new Metabox(
+              'Genoo Dynamic Pop-Over', 
+              array_merge($this->repositarySettings->getCTAPostTypes(), array('wpme-landing-pages')),
+                array(
+                    array(
+                        'type' => 'select',
+                        'label' => __('Enable Pop-Over to open automatically', 'genoo'),
+                        'options' => array('Disable', 'Enable')
+                    ),
+                    array(
+                        'type' => 'select',
+                        'label' => __('CTA', 'genoo'),
+                        'id' => 'pop_over_cta_id',
+                        'options' => $this->repositaryCTAs->getArray()
+                    ),
+                    array(
+                        'type' => 'number',
+                        'label' => __('Open Pop-Up after delay (seconds)', 'genoo'),
+                        'id' => 'number_of_seconds_to_open_the_pop_up_after'
+                    ),
+                    array(
+                        'type' => 'checkbox',
+                        'label' => __('Only display to unknown leads?', 'wpmktengine'),
+                        'id' => 'pop_over_only_for_unknown'
+                    ),
+                )
+            );
+            // Referer URL redirect
+            new Metabox(
+              'Genoo Referer URL Redirect', 
+               array('post', 'page', 'wpme-landing-pages'),
+                array(
+                    array(
+                        'type' => 'select',
+                        'label' => __('Enable Referer Redirect', 'genoo'),
+                        'options' => array('Disable', 'Enable'),
+                        'id' => 'genoo_referer_redirect'
+                    ),
+                    array(
+                        'type' => 'select',
+                        'label' => __('Enable when', 'genoo'),
+                        'options' => array(
+                            'referer_not' => __('user has not come from referer', 'genoo'),
+                            'referer_yes' => __('user has come from referer', 'genoo'),
+                        ),
+                        'id' => 'genoo_referer_redirect_when'
+                    ),
+                    array(
+                        'type' => 'text',
+                        'label' => __('Referer URL', 'genoo'),
+                        'id' => 'genoo_referer_redirect_from_url'
+                    ),
+                    array(
+                        'type' => 'text',
+                        'label' => __('Redirect to URL', 'genoo'),
+                        'id' => 'genoo_referer_redirect_url'
                     )
                 )
             );

@@ -66,6 +66,7 @@ class Frontend
         Action::add('wp_footer', array($this, 'footerLast'), 999);
         Action::add('shutdown', array($this, 'shutdown'), 10, 1);
         Action::add('template_redirect', array($this, 'template_redirect'), 10, 1);
+        Action::add('template_redirect_wpme', array($this, 'template_redirect'), 10, 1);
         // Custom landing pages link
         Filter::add('post_type_link', array($this, 'getPostTypeLink'), 99, 2);
         Filter::add('post_link', array($this, 'getPostTypeLink'), 99, 2);
