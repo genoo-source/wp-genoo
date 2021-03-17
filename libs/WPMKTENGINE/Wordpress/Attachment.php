@@ -91,7 +91,7 @@ class Attachment
         // Image ratio protection (this is experimental)
         if($experimental){
             // Width / height only if both are the same size
-            //img-height / img-width * container-width * 10000
+            // img-height / img-width * container-width * 10000
             if(!is_null($img)){
                 $ratio = (($src[2] / ($src[1] * 100))) * 10000;
                 $css->addRule('body #' . $id.  ' input')

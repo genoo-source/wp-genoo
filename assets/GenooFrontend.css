@@ -40,7 +40,7 @@ body .genooModal.visible {
 strong.genooSucess, strong.genooError { display: block; padding: 10px 0 !important; }
 .genooSucess { color: #2ea200; }
 .genooError { color: #dd3d36; }
-.genooInlineBlock { display: inline-block !important; }
+.genooInlineBlock { display: inline-block !important; max-width: 100%; }
 .genooInlineBlock.right { padding: 20px; padding-right: 0; float: right; }
 .genooInlineBlock.left { padding: 20px; padding-left: 0; float: left; }
 body .genooInlineBlock.center { padding: 20px; float: none; margin: 0 auto; display: flex !important; align-items: center; justify-content: center; }
