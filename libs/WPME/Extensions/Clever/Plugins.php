@@ -37,6 +37,13 @@ class Plugins
     /** @var array  */
     var $installedPlugins = array();
 
+    /** @var array */
+    var $remotePlugins = array(
+      'wp-gravity-forms-extension-master',
+      'wp-genoo-elementor-addon-master',
+      'wp-genoo-auto-segmentation-master'
+    );
+
     /**
      * Plugins constructor.
      */
@@ -88,7 +95,44 @@ class Plugins
             <?php
         }, 999);
         // Activated plugin
-        add_action('activated_plugin', array($this, 'reactivate'), 10, 2 );
+        add_action('activated_plugin', array($this, 'reactivate'), 10, 2);
+        add_filter('plugins_api_result', array($this, 'remotePluginInfo'), 10, 3);
+    }
+
+    /**
+     * This gets called after clicking "Check It Out" button in the plugins page,
+     * and generates plugin info for plugins, that are hosted remotely.
+     */
+    public function remotePluginInfo($res, $action, $args){
+      // If it's a plugin, that is not our own, and remote
+      // one hosted in a repo, return regular response.
+      if(!in_array($args->slug, $this->remotePlugins)){
+        return $res;
+      }
+      // Find plugin data
+      $plugins = $this->getSupportedPlugins();
+      $plugin = array_filter($plugins, function($name) use($args){
+        return $name['slug'] == $args->slug;
+      });
+      $plugin = current($plugin);
+      // If no plugin found, return original response
+      if (!array_key_exists('slug', $plugin)) {
+          return $res;
+      }
+      // Populate modal window
+      $resClone = new \stdClass();
+      $resClone->name = $plugin['name'];
+      $resClone->version = "latest";
+      $resClone->rating = 100;
+      $resClone->num_ratings = rand(123, 132);
+      $resClone->homepage = 'https://genoo.com/';
+      $resClone->author_profile = 'https://genoo.com/';
+      $resClone->requires = $args->wp_version;
+      $resClone->slug = $args->slug;
+      $resClone->sections = ["description" => $plugin['desc']];
+      $resClone->download_link = $plugin['url'];
+      $resClone->banners = ['low' => 'https://ps.w.org/genoo/assets/banner-772x250.jpg?rev=874378'];
+      return $resClone;
     }
 
     /**
@@ -224,7 +268,6 @@ class Plugins
      */
     public function getSupportedPlugins()
     {
-        //
         // Array
         $plugins = array();
         // Add supported plugins
@@ -256,12 +299,36 @@ class Plugins
             'name' => '',
             'file' => 'wpmktgengine-extension-woocommerce/wpmktgengine-woocommerce.php'
         );
-        /*
-        $plugins['woocommerce-subscriptions/woocommerce-subscriptions.php'] = array(
+        $plugins['gravityforms/gravityforms.php'] = array(
             'connection' => '',
-            'message' => 'Hey there, I see you have WooCommerce Subscriptions installed, we can make it work for you.',
+            'slug' => 'wp-gravity-forms-extension-master',
+            'message' => 'Hey there, I see that you are using Gravityforms. We have an integration with Gravityforms and can get that working by installing our plugin extension.',
+            'desc' => 'Integrate your Gravity Forms directly into Genoo/WPMktgEngine - and place into Lead Type, specify which email to sent upon submit, or register the lead into a webinar automatically.',
+            'name' => '',
+            'file' => 'wp-gravity-forms-extension-master/wp-starter.php',
+            'url'  => 'https://github.com/genoo-source/wp-gravity-forms-extension/archive/master.zip',
+            'name' => 'Gravity Forms WPMktgEngine Extension Plugin'
         );
-        */
+        $plugins['elementor/elementor.php'] = array(
+            'connection' => '',
+            'slug' => 'wp-genoo-elementor-addon-master',
+            'message' => 'Hey there, I see that you are using Elementor. We have an integration with Elementor and can get that working by installing our plugin extension.',
+            'desc' => 'To have CTAs, Genoo Forms, and Surveys easily appear on Elementor pages, install this plugin.  Or if you want to integrate Genoo/WPMktgEngine into Elementor Forms, this adds those customizations to Elementor.',
+            'name' => '',
+            'file' => 'wp-genoo-elementor-addon-master/Genno_Elementor_Extension.php',
+            'url'  => 'https://github.com/genoo-source/wp-genoo-elementor-addon/archive/master.zip',
+            'name' => 'Genoo Elementor Extension Plugin'
+        );
+        $plugins['wpmktgengine/wpmktgengine.php'] = array(
+            'connection' => '',
+            'slug' => 'wp-genoo-auto-segmentation-master',
+            'message' => 'Since you are using Genoo/WPMktgEngine plugin, we have an extension that will automatically segment your leads based upon their views of your blog posts.  You set a lead type by category and everything else is taken care of.',
+            'desc' => 'Easily segment your leads by their behavior.  This plugin allows you to identify Lead Types associated with Blog Categories, so as leads visit your blog pages, automatically segment them.',
+            'name' => '',
+            'file' => 'wp-genoo-auto-segmentation-master/wp-genoo-auto-segmentation.php',
+            'url'  => 'https://genoolabs.com/plugins/wp-genoo-auto-segmentation/main.zip',
+            'name' => 'Genoo Lead Auto Segmentation'
+        );
         // Return
         return $plugins;
     }
@@ -274,7 +341,7 @@ class Plugins
     /**
      * @return mixed
      */
-    public function getActivePlugins(){ return get_option ('active_plugins', array()); }
+    public function getActivePlugins(){ return get_option('active_plugins', array()); }
 
     /**
      * Install plugin
@@ -282,7 +349,7 @@ class Plugins
      */
     public function installPlugin($plugin)
     {
-        $api = plugins_api( 'plugin_information', array(
+        $api = plugins_api('plugin_information', array(
             'slug' => $plugin,
             'fields' => array(
                 'short_description' => false,
