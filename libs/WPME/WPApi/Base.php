@@ -48,6 +48,7 @@ abstract class Base
                 array(
                     'methods' => 'GET',
                     'callback' => array(get_called_class(), 'getData'),
+                    'permission_callback' => '__return_true',
                 )
             );
         });
