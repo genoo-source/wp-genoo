@@ -253,7 +253,7 @@ class CTA extends ApiFactory
     public static function amIOwner($post_id)
     {
         $ownerCurrent = \WPME\Extensions\CTAs::getCurrentOwner();
-        $owner = get_post_meta($post_id, \WPME\ApiExtension\CTA::IDENTIFICAOR_OWNER, true);
+        $owner = self::getOwner($post_id);
         $owner = is_string($owner) && !empty($owner) ? $owner : false;
         if($owner){
             return self::isOwner($owner, $ownerCurrent);
@@ -268,7 +268,7 @@ class CTA extends ApiFactory
      */
     public static function getOwner($post_id)
     {
-        return get_post_meta($post_id, \WPME\ApiExtension\CTA::IDENTIFICAOR_OWNER, true);
+        return genoo_wpme_get_domain(get_post_meta($post_id, \WPME\ApiExtension\CTA::IDENTIFICAOR_OWNER, true));
     }
 
 

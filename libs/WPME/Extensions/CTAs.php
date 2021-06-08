@@ -168,7 +168,7 @@ class CTAs
                     }
                     break;
                 case 'owner':
-                    $owner = get_post_meta($post_id, \WPME\ApiExtension\CTA::IDENTIFICAOR_OWNER, true);
+                    $owner = \WPME\ApiExtension\CTA::getOwner($post_id);
                     $owner = is_string($owner) && !empty($owner) ? $owner : false;
                     if($owner){
                         echo $owner;
@@ -505,7 +505,7 @@ class CTAs
      */
     public static function getCurrentOwner()
     {
-        return $_SERVER['SERVER_NAME'];
+        return genoo_wpme_get_domain($_SERVER['SERVER_NAME']);
     }
 
     /**
