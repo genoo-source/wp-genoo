@@ -212,6 +212,9 @@ class Metabox
                         $fieldInput .= '</span>';
                         break;
                     case 'image-select':
+                      	if(is_object($fieldValue) && property_exists($fieldValue, '__id')){
+                          $fieldValue = $fieldValue->__id;
+                        }
                         $fieldCurrent = is_numeric($fieldValue)
                             ? wp_get_attachment_image($fieldValue, 'medium', false)
                             : $fieldValue;

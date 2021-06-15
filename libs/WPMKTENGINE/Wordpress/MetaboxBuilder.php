@@ -543,7 +543,6 @@ class MetaboxBuilder extends Metabox
      */
     public function formContent($name, $placeholder)
     {
-
         if($name == 'form' && $this->formValue($name) !== ''){
             $array = $this->forms->getFormsArray();
             $value = array_key_exists($this->formValue($name), $array) ? $array[$this->formValue($name)] : '';
