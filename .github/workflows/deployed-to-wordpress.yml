@@ -31,7 +31,7 @@ jobs:
           sh ./deploy/deploy.sh
   slack:
     name: Slack Notification
-    deploy: deploy
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
