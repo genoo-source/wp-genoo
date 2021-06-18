@@ -63,7 +63,7 @@ class Genoo
         // Storage
         define('GENOO_CACHE',   \WPMKTENGINE\RepositorySettings::getCacheDir());
         define('GENOO_DEBUG',   get_option('genooDebug'));
-        define('GENOO_REFRESH', sha1('new-admin-ui'));
+        define('GENOO_REFRESH', sha1('css-fix'));
         define('GENOO_DOMAIN', '//api.genoo.com');
         // wp init
         Action::add('plugins_loaded', array($this, 'init'), 1);
