@@ -684,3 +684,4 @@ body .gn-modal-result-success .display-on-success { display: block !important; }
 }
 
 body.genooModalOpen::after {display: none;}
+.genooInlineBlock .themeDefault { max-width: 100%; }

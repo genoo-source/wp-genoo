@@ -5,7 +5,7 @@ Requires at least: 4.6
 Tested up to: 5.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 6.0.2
+Stable tag: 6.0.3
 
 Combine the flexibility of WordPress with the power of Genoo and experience amazing results!
 
@@ -68,6 +68,9 @@ Not a Genoo customer yet? Let's get your ["30-Day Free Trial"](http://www.genoo.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 6.0.3 =
+* Fix CSS button resizing
 
 = 6.0.2 =
 * Firefox Fix for Overlay CSS
