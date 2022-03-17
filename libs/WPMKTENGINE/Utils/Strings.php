@@ -207,6 +207,7 @@ class Strings
 		if ($lower) {
 			$s = strtolower($s);
 		}
+		$charlist = isset($charlist) ? $charlist : '';
 		$s = preg_replace('#[^a-z0-9' . preg_quote($charlist, '#') . ']+#i', '-', $s);
 		$s = trim($s, '-');
 		return $s;
