@@ -280,7 +280,7 @@ class RepositoryPages extends Repository
      * - This does iterate one more time through all
      * but it is the fastest way this time. 
      */
-    public function explodeTree($array, $pagesDependencies = array(), $searchQuery, $valueGenerator = false)
+    public function explodeTree($array, $searchQuery, $pagesDependencies = array(), $valueGenerator = false)
     {
       $delimiter = ' / ';
       if(!is_array($array)) return false;
