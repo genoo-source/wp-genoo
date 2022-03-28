@@ -85,18 +85,12 @@ class ArrayObject extends \ArrayObject
      * @return array
      */
 
-
-
-    public static function appendTo(&$array, $element,$position=null)
-
+    public static function appendTo(&$array, $element, $position=null)
     {
         if(count($array) == 0){
             $array[] = $element;
-
         } elseif (is_numeric($position) && $position < 0){
-
             if((count($array)+$position) < 0) {
-
                 $array = array_insert($array,$element,0);
             } else {
                 $array[count($array)+$position] = $element;
@@ -112,9 +106,7 @@ class ArrayObject extends \ArrayObject
             }
         } elseif (is_null($position)){
             $array[] = $element;
-
-        } elseif (!$position && !isset($array[$position])){
-
+        } elseif (!isset($array[$position])){
             $array[$position] = $element;
         }
         $array = array_merge($array);

@@ -364,7 +364,7 @@ class Admin
             // Moving Page Builder
             $wpmkteMenu = $submenu['Genoo'][4];
             unset($submenu['Genoo'][4]);
-            $submenu['Genoo'] = \WPMKTENGINE\Utils\ArrayObject::appendTo($submenu['Genoo'], 2, $wpmkteMenu);
+            $submenu['Genoo'] = \WPMKTENGINE\Utils\ArrayObject::appendTo($submenu['Genoo'], $wpmkteMenu,  2);
             // Order game
             \WPMKTENGINE\Utils\ArrayObject::moveFromPositionToPosition($submenu['Genoo'], 2, 1);
             \WPMKTENGINE\Utils\ArrayObject::moveFromPositionToPosition($submenu['Genoo'], 4, 3);

@@ -591,6 +591,7 @@ class Strings
 			restore_error_handler();
 			throw new RegexpException("$message in pattern: " . implode(' or ', (array) $pattern));
 		});
+		$subject = isset($subject) ? $subject : '';
 		$res = preg_replace($pattern, $replacement, $subject, $limit);
 		restore_error_handler();
 		if (preg_last_error()) { // run-time error

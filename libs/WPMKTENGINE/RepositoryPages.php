@@ -258,8 +258,8 @@ class RepositoryPages extends Repository
       $pagesDependencies = RepositoryLandingPages::findDependenciesForTemplateWithPosts();
       $pagesTree = $this->explodeTree(
         $pagesFromDatabase,
-        $pagesDependencies,
         $searchQuery,
+        $pagesDependencies,
         function($leafPart, $returnedValue) use ($pagesDependencies) {
           return array(
             self::REPO_SORT_NAME => $this->getUniqueName($leafPart),

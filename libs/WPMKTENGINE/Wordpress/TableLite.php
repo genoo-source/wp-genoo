@@ -313,7 +313,7 @@ class TableLite {
      * @param string $text The search button text
      * @param string $input_id The search input id
      */
-    public function search_box( $text, $placeholder = '', $input_id ) {
+    public function search_box( $text, $input_id, $placeholder = '') {
         $where = strtok(Utils::getRealUrl(), "&");
         if ( empty( $_REQUEST['s'] ) && !$this->has_items() )
             return;
