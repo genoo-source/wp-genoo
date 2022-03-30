@@ -556,8 +556,8 @@ class TablePages extends Table
             ";
             $this->search_box(
               $searchText, 
-              __('Page name, URL or ID', 'wpmktengine'), 
-              'search-wpme-landing-pages'
+               'search-wpme-landing-pages',
+              __('Page name, URL or ID', 'wpmktengine')
             );
         }
         if($which == 'bottom'){
