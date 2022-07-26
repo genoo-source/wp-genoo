@@ -91,7 +91,9 @@ class Genoo
         $this->cache = new \WPME\CacheFactory(GENOO_CACHE);
         // helper constants
         define('GENOO_PART_SETUP', $this->api->isSetup());
+        if (!defined('GENOO_SETUP')){
         define('GENOO_SETUP', $this->api->isSetupFull());
+        }
         define('GENOO_LUMENS', $this->api->isLumensSetup());
         if(GENOO_SETUP){
             define('WPMKTENGINE_BUILDER_NEW', WPMKTENGINE_BUILDER . 'index-login.php?api='. $this->repositarySettings->getApiKey() .'&domain=' . GENOO_HOME_URL);

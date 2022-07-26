@@ -197,7 +197,7 @@ class CTA
         $this->formId = $h;
         $this->formTheme = $i;
         $this->isClasslist = $a == 'class' ? true : false;
-        $this->isLink = $this->isForm ? false : $this->isClasslist ? false : true;
+        $this->isLink = $this->isForm ? false : ($this->isClasslist ? false : true);
         $this->isNewWindow = ($c == 'true') ? true : false;
         $this->isImage = $d == 'image' ? true : false;
         $this->isHtml = $this->isImage ? false : true;

@@ -85,12 +85,12 @@ class ArrayObject extends \ArrayObject
      * @return array
      */
 
-    public static function appendTo(&$array, $position=null, $element)
+    public static function appendTo(&$array, $element, $position=null)
     {
         if(count($array) == 0){
             $array[] = $element;
         } elseif (is_numeric($position) && $position < 0){
-            if((count($array)+position) < 0) {
+            if((count($array)+$position) < 0) {
                 $array = array_insert($array,$element,0);
             } else {
                 $array[count($array)+$position] = $element;

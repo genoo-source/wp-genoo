@@ -258,8 +258,8 @@ class RepositoryPages extends Repository
       $pagesDependencies = RepositoryLandingPages::findDependenciesForTemplateWithPosts();
       $pagesTree = $this->explodeTree(
         $pagesFromDatabase,
-        $pagesDependencies,
         $searchQuery,
+        $pagesDependencies,
         function($leafPart, $returnedValue) use ($pagesDependencies) {
           return array(
             self::REPO_SORT_NAME => $this->getUniqueName($leafPart),
@@ -280,7 +280,7 @@ class RepositoryPages extends Repository
      * - This does iterate one more time through all
      * but it is the fastest way this time. 
      */
-    public function explodeTree($array, $pagesDependencies = array(), $searchQuery, $valueGenerator = false)
+    public function explodeTree($array, $searchQuery, $pagesDependencies = array(), $valueGenerator = false)
     {
       $delimiter = ' / ';
       if(!is_array($array)) return false;
