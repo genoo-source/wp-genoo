@@ -325,7 +325,7 @@ class Plugins
             'desc' => 'Easily segment your leads by their behavior.  This plugin allows you to identify Lead Types associated with Blog Categories, so as leads visit your blog pages, automatically segment them.',
             'name' => '',
             'file' => 'wp-genoo-auto-segmentation-master/wp-genoo-auto-segmentation.php',
-            'url'  => 'https://genoolabs.com/plugins/wp-genoo-auto-segmentation/main.zip',
+            'url'  => 'https://genoolabs.com/plugins/wp-genoo-auto-segmentation/wp-genoo-auto-segmentation-master.zip',
             'name' => 'Genoo Lead Auto Segmentation'
         );
         // Return
