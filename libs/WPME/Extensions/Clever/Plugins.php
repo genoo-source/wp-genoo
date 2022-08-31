@@ -69,6 +69,26 @@ class Plugins
         }, 999);
         add_action('admin_head', function(){
             ?>
+    <style>
+    .notice.custom-notice-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 50px;
+    padding: 0;
+border-left-width: 2px;
+}
+.notice.custom-notice-bar .notice-right {
+    width: 100px;
+    margin-right: 5px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-right: solid 3px #14da6a;
+    padding: 0 15px;
+    background-color: #eee;
+}
+</style>
             <script type="text/javascript">
                 jQuery(function() {
                     // On install
@@ -96,6 +116,8 @@ class Plugins
         // Activated plugin
         add_action('activated_plugin', array($this, 'reactivate'), 10, 2);
         add_filter('plugins_api_result', array($this, 'remotePluginInfo'), 10, 3);
+        add_filter('upgrader_source_selection', array( $this, 'rename_github_zip' ), 1, 3 );
+
     }
 
     /**
@@ -187,6 +209,24 @@ class Plugins
             );
         }
     }
+    
+    public function rename_github_zip( $source, $remote_source, $thiz )
+    {
+    $path_parts = pathinfo($source);
+
+    if(strpos($path_parts['filename'],'wp-genoo-auto-segmentation-master') !== false){
+
+          $repo_slug = 'wp-genoo-auto-segmentation-master';
+    $newsource = trailingslashit($path_parts['dirname']). trailingslashit($repo_slug);
+    rename($source, $newsource);
+    
+    return $newsource;
+     }
+     else
+     {
+        return $source; 
+     }
+}
 
     /**
      * Generate message
@@ -197,8 +237,8 @@ class Plugins
     public function generateInstallMessage($pluginDefinition)
     {
         $pluginOwner = apply_filters('genoo_wpme_clever_plugins_owner', '<strong>WPMKTGENGINE: </strong>');
-        return "
-            <div class='wpme-plugin-notice plugin-card-{$pluginDefinition['slug']}'>
+        echo "
+            <div class='wpme-plugin-notice plugin-card-{$pluginDefinition['slug']} notice custom-notice-bar'>
                 <div class='notice-right'>
                    <a 
                     data-slug='{$pluginDefinition['slug']}'
@@ -318,15 +358,15 @@ class Plugins
             'url'  => 'https://github.com/genoo-source/wp-genoo-elementor-addon/archive/master.zip',
             'name' => 'Genoo Elementor Extension Plugin'
         );
-        $plugins['wpmktgengine/wpmktgengine.php'] = array(
+        $plugins['genoo/Genoo.php'] = array(
             'connection' => '',
             'slug' => 'wp-genoo-auto-segmentation-master',
-            'message' => 'Since you are using Genoo/WPMktgEngine plugin, we have an extension that will automatically segment your leads based upon their views of your blog posts.  You set a lead type by category and everything else is taken care of.',
-            'desc' => 'Easily segment your leads by their behavior.  This plugin allows you to identify Lead Types associated with Blog Categories, so as leads visit your blog pages, automatically segment them.',
+            'message' => 'Since you are using Genoo/WPMktgEngine plugin, we have an extension that will automatically segment your leads based upon their views of your blog posts.  You set a lead type by category and everything else is taken care of.',
+            'desc' => 'Easily segment your leads by their behavior.  This plugin allows you to identify Lead Types associated with Blog Categories, so as leads visit your blog pages, automatically segment them.',
             'name' => '',
             'file' => 'wp-genoo-auto-segmentation-master/wp-genoo-auto-segmentation.php',
             'url'  => 'https://genoolabs.com/plugins/wp-genoo-auto-segmentation/wp-genoo-auto-segmentation-master.zip',
-            'name' => 'Genoo Lead Auto Segmentation'
+            'name' => 'Auto Segment Your Leads - Genoo'
         );
         // Return
         return $plugins;
@@ -375,6 +415,8 @@ class Plugins
         );
         $upgrader->install($api->download_link);
     }
+    
+
 
     /**
      * @param $notification
