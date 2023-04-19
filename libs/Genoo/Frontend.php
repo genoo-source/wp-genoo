@@ -668,86 +668,91 @@ class Frontend
 	    // Turn off errors
 	    error_reporting(0);
 	    ini_set('error_reporting', 0);
-        // This might hold output buffer
-        $headerAdditional = $header;
-        // Set title so we can manipulate it later on
-        $title = $landingPost->post_title;
-        // Set up post data for plugins / extensions, well setup, fake it
-        $GLOBALS['wp_query'] = new \WP_Query(array('p' => $landingPost->ID, 'post_type' => 'wpme-landing-pages'));
-        $GLOBALS['wp_query']->is_singular = true;
-        $GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
-        $GLOBALS['post'] = $landingPost;
-        $GLOBALS['landing_page'] = $landingPost;
-        // Setup data and initiate
-        setup_postdata($GLOBALS['post']);
-        $title = apply_filters('wp_title', $title, '', '');
-        // If there is Yoast SEO, use it
-        if(defined('WPSEO_VERSION') && function_exists('wpseo_frontend_head_init') && function_exists('setup_postdata')){
-            // There might be Yoast SEO custom header data
-            // Start the output buffer
-            ob_start();
-            // Applyg globals
-            wpseo_frontend_head_init();
-            // Do header actions
-            do_action('wpseo_head');
-            $output = ob_get_contents();
-            ob_end_clean();
-            $headerAdditional .= $output;
-        }
-        // All in one SEO Pack? Use it
-        if(defined('AIOSEOP_VERSION') && isset($GLOBALS['aiosp']) && $GLOBALS['aiosp'] instanceof \All_in_One_SEO_Pack && method_exists($GLOBALS['aiosp'], 'wp_head')){
-            // There might be Yoast SEO custom header data
-            // Start the output buffer
-            ob_start();
-            $aiosp = $GLOBALS['aiosp'];
-            $aiosp->wp_head();
-            $output = ob_get_contents();
-            ob_end_clean();
-            $headerAdditional .= $output;
-        }
-        // SEO Ultimate
-        if(defined('SU_MINIMUM_WP_VER')){
-            ob_start();
-            do_action('su_head');
-            $output = ob_get_contents();
-            ob_end_clean();
-            $headerAdditional .= $output;
-        }
-        // UTF-8 header
-        header('Content-Type: text/html; charset=utf-8');
-        // Lets see
-        try {
-            $pages = new \WPMKTENGINE\RepositoryPages($this->cache, $this->api);
-            $page = $pages->getPage($id);
-            // Affialites
-            if(class_exists('\Affiliate_WP_Tracking')){
-                add_filter('affwp_use_fallback_tracking_method', '__return_true', 999);
-                $affiliates = new \Affiliate_WP_Tracking();
-                if(method_exists($affiliates, 'fallback_track_visit')){
-                    $affiliates->fallback_track_visit();
-                }
-            }
-            // Id
-            $page = (array)$page;
-            $pageData = $page['page_data'];
-            $pageName = $page['name'];
-            if(is_string($pageData) && Strings::startsWith($pageData,'<!DOCTYPE')){
-                $renderer = new \WPME\Extensions\TemplateRenderer($pageData);
-                $renderer->prepare();
-            } else {
-                $renderer = new \WPMKTENGINE\TemplateRenderer($pageData);
-                $renderer->prapare();
-                $renderer->iterate();
-            }
-            $renderer->render(
-                $title,
-                $headerAdditional . $header,
-                $footer
-            );
-        } catch (\Exception $e){
-            echo $e->getMessage();
-        }
-        exit();
+      // Render tracking in header instead of footer?
+      $pageRenderTrackingInHead = 
+        isset($landingPost->meta->wpmktengine_tracking_data_head)
+        && $landingPost->meta->wpmktengine_tracking_data_head == 'true';
+      // This might hold output buffer
+      $headerAdditional = $header;
+      // Set title so we can manipulate it later on
+      $title = $landingPost->post_title;
+      // Set up post data for plugins / extensions, well setup, fake it
+      $GLOBALS['wp_query'] = new \WP_Query(array('p' => $landingPost->ID, 'post_type' => 'wpme-landing-pages'));
+      $GLOBALS['wp_query']->is_singular = true;
+      $GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
+      $GLOBALS['post'] = $landingPost;
+      $GLOBALS['landing_page'] = $landingPost;
+      // Setup data and initiate
+      setup_postdata($GLOBALS['post']);
+      $title = apply_filters('wp_title', $title, '', '');
+      // If there is Yoast SEO, use it
+      if(defined('WPSEO_VERSION') && function_exists('wpseo_frontend_head_init') && function_exists('setup_postdata')){
+          // There might be Yoast SEO custom header data
+          // Start the output buffer
+          ob_start();
+          // Applyg globals
+          wpseo_frontend_head_init();
+          // Do header actions
+          do_action('wpseo_head');
+          $output = ob_get_contents();
+          ob_end_clean();
+          $headerAdditional .= $output;
+      }
+      // All in one SEO Pack? Use it
+      if(defined('AIOSEOP_VERSION') && isset($GLOBALS['aiosp']) && $GLOBALS['aiosp'] instanceof \All_in_One_SEO_Pack && method_exists($GLOBALS['aiosp'], 'wp_head')){
+          // There might be Yoast SEO custom header data
+          // Start the output buffer
+          ob_start();
+          $aiosp = $GLOBALS['aiosp'];
+          $aiosp->wp_head();
+          $output = ob_get_contents();
+          ob_end_clean();
+          $headerAdditional .= $output;
+      }
+      // SEO Ultimate
+      if(defined('SU_MINIMUM_WP_VER')){
+          ob_start();
+          do_action('su_head');
+          $output = ob_get_contents();
+          ob_end_clean();
+          $headerAdditional .= $output;
+      }
+      // UTF-8 header
+      header('Content-Type: text/html; charset=utf-8');
+      // Lets see
+      try {
+          $pages = new \WPMKTENGINE\RepositoryPages($this->cache, $this->api);
+          $page = $pages->getPage($id);
+          // Affialites
+          if(class_exists('\Affiliate_WP_Tracking')){
+              add_filter('affwp_use_fallback_tracking_method', '__return_true', 999);
+              $affiliates = new \Affiliate_WP_Tracking();
+              if(method_exists($affiliates, 'fallback_track_visit')){
+                  $affiliates->fallback_track_visit();
+              }
+          }
+          // Id
+          $page = (array)$page;
+          $pageData = $page['page_data'];
+          $pageName = $page['name'];
+          if(is_string($pageData) && Strings::startsWith($pageData,'<!DOCTYPE')){
+              $renderer = new \WPME\Extensions\TemplateRenderer($pageData);
+              $renderer->prepare();
+          } else {
+              $renderer = new \WPMKTENGINE\TemplateRenderer($pageData);
+              $renderer->prapare();
+              $renderer->iterate();
+          }
+          $renderer->render(
+              $title,
+              $headerAdditional,
+              $footer,
+              $pageRenderTrackingInHead
+          );
+      } catch (\Exception $e){
+          echo $e->getMessage();
+      }
+      exit();
     }
 
     /**

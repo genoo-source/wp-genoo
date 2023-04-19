@@ -1386,7 +1386,7 @@ class TemplateRenderer
      * @param string $additionalHeader
      * @param string $additionalFooter
      */
-    public function render($title = '', $additionalHeader = '', $additionalFooter = '')
+    public function render($title = '', $additionalHeader = '', $additionalFooter = '', $renderTrackingInHead = false)
     {
         global $WPME_STYLES;
         global $wp_filter;
@@ -1397,7 +1397,7 @@ class TemplateRenderer
         $repositoryThemes = new RepositoryThemes();
         $css = $repositoryThemes->getAllThemesStyles();
         $cssStyles = (isset($WPME_STYLES) && !empty($WPME_STYLES)) ? $WPME_STYLES : '';
-        \add_filter('genoo_tracking_in_header', function(){ return false; }, 100, 1);
+        \add_filter('genoo_tracking_in_header', function(){ return $renderTrackingInHead; }, 100, 1);
         // Remove wpfooter
         if(isset($wp_filter['wp_footer']) && is_array($wp_filter['wp_footer']->callbacks[1])){ // we assign to first footer
             foreach($wp_filter['wp_footer']->callbacks[1] as $filter => $data){
