@@ -740,7 +740,12 @@ class Admin
                         'type' => 'textarea',
                         'label' => __('Additional footer data', 'wpmktengine'),
                         'id' => 'wpmktengine_data_footer'
-                    )
+                    ),
+                    array(
+                        'type' => 'checkbox',
+                        'label' => __('Render Tracking Code in the &lt;head&gt; of HTML?', 'wpmktengine'),
+                        'id' => 'wpmktengine_tracking_data_head'
+                    ),
                 )
             );
             // Dynamic PopOver

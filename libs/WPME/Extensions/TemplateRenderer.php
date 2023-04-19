@@ -20,6 +20,7 @@
 namespace WPME\Extensions;
 
 use WPMKTENGINE\RepositoryThemes;
+use \WPME\RepositorySettingsFactory;
 
 /**
  * Class TemplateRenderer
@@ -118,17 +119,33 @@ class TemplateRenderer extends \WPMKTENGINE\TemplateRenderer
      * @param string $additionalHeader
      * @param string $additionalFooter
      */
-    public function render($title = '', $additionalHeader = '', $additionalFooter = '')
+    public function render($title = '', $additionalHeader = '', $additionalFooter = '', $renderTrackingInHead = false)
     {
         // Get header styles
         $repositoryThemes = new RepositoryThemes();
         $css = $repositoryThemes->getAllThemesStyles();
         $cssStyles = (isset($WPME_STYLES) && !empty($WPME_STYLES)) ? $WPME_STYLES : '';
         // Header
+        $trackingScript = '';
+        // Tracking code option
+        if($renderTrackingInHead === FALSE){
+          // If we're rendering the tracking script in footer, nothing to do
+          \add_filter('genoo_tracking_in_header', '__return_false');
+        } else {
+          // Make it not render it in header (it gets chucked away)
+          // and add it manually
+          \add_filter('genoo_tracking_in_header', '__return_true');
+          // If not, we add to header.
+          $repositorySettings = new \WPME\RepositorySettingsFactory();
+          $trackingScript = $repositorySettings->getTrackingCode();
+        }
+        
+        // Header
         $header = '
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <title>'. $title .'</title>
+                '. $trackingScript .'
                 <link rel="stylesheet" href="'. WPMKTENGINE_BUILDER . 'stylesheets/render.css" charset="utf-8" />
                 <style type="text/css">
                 '. $this->appendInline('bootstrap') .'
@@ -167,7 +184,6 @@ class TemplateRenderer extends \WPMKTENGINE\TemplateRenderer
         $footer = $additionalFooter;
         $footer .= \WPME\RepositorySettingsFactory::getLandingPagesGlobal('footer');
         \WPMKTENGINE\Wordpress\Filter::removeFrom('wp_footer')->everythingThatStartsWith('et_');
-        \add_filter('genoo_tracking_in_header', '__return_false');
         // Footer: Buffer
         ob_start();
         wp_footer();
