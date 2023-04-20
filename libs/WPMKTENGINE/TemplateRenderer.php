@@ -1443,14 +1443,15 @@ class TemplateRenderer
                 '. $css .'
                 </style>
                 '. $this->css .'
+                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('header') .'
                 '. $additionalHeader .'
                 '. \WPMKTENGINE\Utils\CSS::START . $cssStyles . \WPMKTENGINE\Utils\CSS::END .'
-                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('header') .'
             </head>
             <body id="body" class="'. $this->bodyClass .'" style="'. $this->getBodyStyle() .'">
                 <div>'. $this->buffer .'</div>
+                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('footer') .'
                 '. $additionalFooter .'
-                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('footer') .'';
+              ';
                 // WP_footer for cta modals
                 $this->renderFooterScripts();
                 wp_footer();

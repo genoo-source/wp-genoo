@@ -176,13 +176,13 @@ class TemplateRenderer extends \WPMKTENGINE\TemplateRenderer
                 '. $css .'
                 </style>
                 '. $this->css .'
+                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('header') .'
                 '. $additionalHeader .'
                 '. \WPMKTENGINE\Utils\CSS::START . $cssStyles . \WPMKTENGINE\Utils\CSS::END .'
-                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('header') .'
         ';
         // Footer
-        $footer = $additionalFooter;
-        $footer .= \WPME\RepositorySettingsFactory::getLandingPagesGlobal('footer');
+        $footer = \WPME\RepositorySettingsFactory::getLandingPagesGlobal('footer');
+        $footer .= $additionalFooter;
         \WPMKTENGINE\Wordpress\Filter::removeFrom('wp_footer')->everythingThatStartsWith('et_');
         // Footer: Buffer
         ob_start();
