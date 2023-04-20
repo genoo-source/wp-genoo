@@ -69,6 +69,10 @@ Not a Genoo customer yet? Let's get your ["30-Day Free Trial"](http://www.genoo.
 
 == Changelog ==
 
+= 6.0.7 =
+* Ability to set tracking code in Landing Pages to be in header / footer
+* Minor changes to rendering order
+
 = 6.0.3 =
 * Fix CSS button resizing
 
