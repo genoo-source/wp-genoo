@@ -413,6 +413,10 @@ class Frontend
     {
         // Tracking code
         if(GENOO_SETUP){
+            $isManuallyRendered = apply_filters('genoo_tracking_is_manually_tracking', FALSE);
+            if($isManuallyRendered){
+              return;
+            }
             $inHeader = apply_filters('genoo_tracking_in_header', FALSE);
             if($inHeader == TRUE){
                 // Get repo
@@ -437,10 +441,10 @@ class Frontend
     {
         // Tracking code
         if(GENOO_SETUP){
+            $isManuallyRendered = apply_filters('genoo_tracking_is_manually_tracking', FALSE);
             $inHeader = apply_filters('genoo_tracking_in_header', FALSE);
-            // Get repo
-            if($inHeader == FALSE){
-                echo $this->repositorySettings->getTrackingCode();
+            if(!$isManuallyRendered && !$inHeader){
+              echo $this->repositorySettings->getTrackingCode();
             }
             global $GENOO_STYLES;
             echo $GENOO_STYLES;
