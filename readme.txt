@@ -2,11 +2,7 @@
 Contributors: Genoo,latorante
 Tags: marketing automation, email marketing, centralized lead database, lead capture forms
 Requires at least: 4.6
-<<<<<<< HEAD
-Tested up to: 6.0.1
-=======
 Tested up to: 6.2
->>>>>>> c7cb8e9c389c56f899df43ba6eef7d4d2482992b
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Stable tag: 6.0.6
