@@ -5,7 +5,7 @@ Requires at least: 4.6
 Tested up to: 6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 6.0.6
+Stable tag: 6.0.9
 
 Combine the flexibility of WordPress with the power of Genoo and experience amazing results!
 
@@ -68,6 +68,12 @@ Not a Genoo customer yet? Let's get your ["30-Day Free Trial"](http://www.genoo.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 6.0.10 = 
+* Minor changes to rendering order of header scripts
+
+= 6.0.7 =
+* Ability to set tracking code in Landing Pages to be in header / footer
 
 = 6.0.3 =
 * Fix CSS button resizing

@@ -125,19 +125,19 @@ class TemplateRenderer extends \WPMKTENGINE\TemplateRenderer
         $repositoryThemes = new RepositoryThemes();
         $css = $repositoryThemes->getAllThemesStyles();
         $cssStyles = (isset($WPME_STYLES) && !empty($WPME_STYLES)) ? $WPME_STYLES : '';
-        // Header
-        $trackingScript = '';
+        // Tracking script manually tracked
+        \add_filter('genoo_tracking_is_manually_tracking', '__return_true');
+        $repositorySettings = new \WPME\RepositorySettingsFactory();
+        $trackingScript = $repositorySettings->getTrackingCode();
+        // Tracking script locations
+        $trackingScriptHeader = '';
+        $trackingScriptFooter = '';
         // Tracking code option
         if($renderTrackingInHead === FALSE){
           // If we're rendering the tracking script in footer, nothing to do
-          \add_filter('genoo_tracking_in_header', '__return_false');
+          $trackingScriptFooter = $trackingScript;
         } else {
-          // Make it not render it in header (it gets chucked away)
-          // and add it manually
-          \add_filter('genoo_tracking_in_header', '__return_true');
-          // If not, we add to header.
-          $repositorySettings = new \WPME\RepositorySettingsFactory();
-          $trackingScript = $repositorySettings->getTrackingCode();
+          $trackingScriptHeader = $trackingScript;
         }
         
         // Header
@@ -145,7 +145,7 @@ class TemplateRenderer extends \WPMKTENGINE\TemplateRenderer
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <title>'. $title .'</title>
-                '. $trackingScript .'
+                '. $trackingScriptHeader .'
                 <link rel="stylesheet" href="'. WPMKTENGINE_BUILDER . 'stylesheets/render.css" charset="utf-8" />
                 <style type="text/css">
                 '. $this->appendInline('bootstrap') .'
@@ -176,13 +176,13 @@ class TemplateRenderer extends \WPMKTENGINE\TemplateRenderer
                 '. $css .'
                 </style>
                 '. $this->css .'
+                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('header') .'
                 '. $additionalHeader .'
                 '. \WPMKTENGINE\Utils\CSS::START . $cssStyles . \WPMKTENGINE\Utils\CSS::END .'
-                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('header') .'
         ';
         // Footer
-        $footer = $additionalFooter;
-        $footer .= \WPME\RepositorySettingsFactory::getLandingPagesGlobal('footer');
+        $footer = \WPME\RepositorySettingsFactory::getLandingPagesGlobal('footer');
+        $footer .= $additionalFooter;
         \WPMKTENGINE\Wordpress\Filter::removeFrom('wp_footer')->everythingThatStartsWith('et_');
         // Footer: Buffer
         ob_start();
@@ -191,6 +191,7 @@ class TemplateRenderer extends \WPMKTENGINE\TemplateRenderer
         $footerSecond = ob_get_contents();
         ob_end_clean();
         $footer .= $footerSecond;
+        $footer .= $trackingScriptFooter;
         // Append
         $this->buffer = str_replace(
             array(

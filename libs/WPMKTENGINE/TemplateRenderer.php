@@ -1397,7 +1397,22 @@ class TemplateRenderer
         $repositoryThemes = new RepositoryThemes();
         $css = $repositoryThemes->getAllThemesStyles();
         $cssStyles = (isset($WPME_STYLES) && !empty($WPME_STYLES)) ? $WPME_STYLES : '';
-        \add_filter('genoo_tracking_in_header', function(){ return $renderTrackingInHead; }, 100, 1);
+
+        // Tracking script manually tracked
+        \add_filter('genoo_tracking_is_manually_tracking', '__return_true');
+        $repositorySettings = new \WPME\RepositorySettingsFactory();
+        $trackingScript = $repositorySettings->getTrackingCode();
+        // Tracking script locations
+        $trackingScriptHeader = '';
+        $trackingScriptFooter = '';
+        // Tracking code option
+        if($renderTrackingInHead === FALSE){
+          // If we're rendering the tracking script in footer, nothing to do
+          $trackingScriptFooter = $trackingScript;
+        } else {
+          $trackingScriptHeader = $trackingScript;
+        }
+
         // Remove wpfooter
         if(isset($wp_filter['wp_footer']) && is_array($wp_filter['wp_footer']->callbacks[1])){ // we assign to first footer
             foreach($wp_filter['wp_footer']->callbacks[1] as $filter => $data){
@@ -1414,6 +1429,7 @@ class TemplateRenderer
 	              <meta charset="utf-8">
 	              <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
                 <title>'. $title .'</title>
+                '. $trackingScriptHeader .'
                 <link rel="stylesheet" href="'. WPMKTENGINE_BUILDER . 'stylesheets/render.css" charset="utf-8" />
                 <style type="text/css">
                 '. $this->appendInline('bootstrap') .'
@@ -1443,20 +1459,22 @@ class TemplateRenderer
                 '. $css .'
                 </style>
                 '. $this->css .'
+                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('header') .'
                 '. $additionalHeader .'
                 '. \WPMKTENGINE\Utils\CSS::START . $cssStyles . \WPMKTENGINE\Utils\CSS::END .'
-                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('header') .'
             </head>
             <body id="body" class="'. $this->bodyClass .'" style="'. $this->getBodyStyle() .'">
                 <div>'. $this->buffer .'</div>
+                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('footer') .'
                 '. $additionalFooter .'
-                '. \WPME\RepositorySettingsFactory::getLandingPagesGlobal('footer') .'';
+              ';
                 // WP_footer for cta modals
                 $this->renderFooterScripts();
                 wp_footer();
                 if(isset($WPME_FRONTEND)){
                     $WPME_FRONTEND->footerFirst();
                 }
+                echo $trackingScriptFooter;
             echo '</body>';
         echo '</html>';
     }
