@@ -45,8 +45,10 @@ $id = isset($WPME_MODAL_ID) ? $WPME_MODAL_ID : '';
 <?= $id ?> input[type="checkbox"] {
   margin-right: 4px;
 }
-
-<?= $id ?> .gn-form input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]),
+ 
+	
+	
+<?= $id ?> .gn-form input:not([type="submit"]):not([type="radio"]):not([type="checkbox"]):not([type="tel"]),
 <?= $id ?> form select,
 <?= $id ?> form textarea{
   display: block;
@@ -66,6 +68,28 @@ $id = isset($WPME_MODAL_ID) ? $WPME_MODAL_ID : '';
   -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+	
+<?= $id ?> .iti--allow-dropdown input, .iti--allow-dropdown input[type="text"], .iti--allow-dropdown input[type="tel"],
+	.iti--separate-dial-code input, .iti--separate-dial-code input[type="text"],
+	.iti--separate-dial-code input[type="tel"] { 		
+		padding: 0px 6px 0px 52px;
+		 display: block;
+               width: 100%;
+               height: 34px;              
+               font-size: 14px;
+               line-height: 1.42857143;
+               color: #555;
+               background-color: #fff;
+               background-image: none;
+               border: 1px solid #ccc;
+               border-radius: 4px;
+               -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+               box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+               -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+               -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+               transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	}
+	
 <?= $id ?> form textarea { height: auto; }
 
 <?= $id ?> form .gn-field-container {

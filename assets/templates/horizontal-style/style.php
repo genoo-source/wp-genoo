@@ -40,10 +40,13 @@ $id = isset($WPME_MODAL_ID) ? $WPME_MODAL_ID : '';
   margin-bottom: 5px;
   font-weight: 700;
 }
+	
 
-<?= $id ?> .gn-form input.form-control,
+
+<?= $id ?> .gn-form input.form-control:not([type="tel"]),
 <?= $id ?> .gn-form select.form-control,
-<?= $id ?> .gn-form textarea.form-control{
+<?= $id ?> .gn-form textarea.form-control
+	{
   display: block;
   width: 100%;
   height: 34px;
@@ -61,6 +64,29 @@ $id = isset($WPME_MODAL_ID) ? $WPME_MODAL_ID : '';
   -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+	
+<?= $id ?> .iti--allow-dropdown input, .iti--allow-dropdown input[type="text"], .iti--allow-dropdown input[type="tel"],
+	.iti--separate-dial-code input, .iti--separate-dial-code input[type="text"],
+	.iti--separate-dial-code input[type="tel"]
+	{ 		
+		padding: 0px 6px 0px 45px;
+		display: block;
+   			   width: 100%;
+               height: 34px;              
+               font-size: 14px;
+               line-height: 1.42857143;
+               color: #555;
+               background-color: #fff;
+               background-image: none;
+               border: 1px solid #ccc;
+               border-radius: 4px;
+               -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+               box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+               -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+               -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+               transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	}
+	
 <?= $id ?> .gn-form textarea.form-control { height: auto; }
 
 <?= $id ?> .gn-form .gn-field-container {
