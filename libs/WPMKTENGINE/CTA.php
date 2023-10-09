@@ -226,7 +226,8 @@ class CTA
     {
         if(Post::exists($post_id)){
             $popOver = get_post_meta($post_id, 'enable_pop_over_to_open_automatically', TRUE);
-            return $popOver == 0 ? FALSE : TRUE;
+            return $popOver == 1 ? TRUE : FALSE;
+			
         }
         return FALSE;
     }
