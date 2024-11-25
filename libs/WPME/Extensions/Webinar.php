@@ -58,6 +58,6 @@ function wpme_webinar_date( $atts ) {
         'index' => "1",
         'format' => 'day date time'
     ), $atts, 'wpme_webinar_date' );
-    return "<span class=\"gn-webinar-date\" data-index=\"" . $atts['index'] ."\" data-format=\"" . $atts['format'] . "\"></span>";
+    return "<span class=\"gn-webinar-date\" data-index=\"" . esc_attr($atts['index']) ."\" data-format=\"" . esc_attr($atts['format']) . "\"></span>";
 }
 add_shortcode("wpme_webinar_date", "wpme_webinar_date");
