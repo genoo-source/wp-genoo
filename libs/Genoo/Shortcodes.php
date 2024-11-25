@@ -129,9 +129,9 @@ class Shortcodes
             $repositoryForms = new RepositoryForms(new Cache(GENOO_CACHE), new \WPME\ApiFactory($repositorySettings));
             $formId = !empty($atts['id']) && is_numeric($atts['id']) ? $atts['id'] : null;
             $formIdFinal = is_null($formId) ? $repositorySettings->getActiveForm() : $formId;
-            $formTheme = !empty($atts['theme']) ? $atts['theme'] : $repositorySettings->getActiveTheme();
-            $formSuccess = !empty($atts['msgsuccess']) ? $atts['msgsuccess'] : null;
-            $formFail = !empty($atts['msgfail']) ? $atts['msgfail'] : null;
+            $formTheme = !empty($atts['theme']) ? esc_attr($atts['theme']) : $repositorySettings->getActiveTheme();
+            $formSuccess = !empty($atts['msgsuccess']) ? esc_html($atts['msgsuccess']) : null;
+            $formFail = !empty($atts['msgfail']) ? esc_html($atts['msgfail']) : null;
             // do we have a form ID?
             if(!empty($formIdFinal)){
                 // Get unique id
@@ -216,7 +216,7 @@ class Shortcodes
             try {
                 // Get CTA
                 $cta = new \WPMKTENGINE\WidgetCTA();
-                $cta->setThroughShortcode($count, $atts['id'], $atts);
+                $cta->setThroughShortcode($count, esc_attr($atts['id']), $atts);
                 // Increase counter
                 $count++;
                 return $cta->getHtmlInner(array(), $cta->getInnerInstance());
@@ -441,7 +441,7 @@ class Shortcodes
                     if($atts['id'] && is_numeric($atts['id']) && Post::exists($atts['id'])){
                         // get CTA
                         $cta = new WidgetCTA();
-                        $cta->setThroughShortcode($id, $atts['id']);
+                        $cta->setThroughShortcode($id, esc_attr($atts['id']));
                         // PUt in array if it is form CTA
                         if($cta->cta->isForm){
                             $r[$cta->id] = new \stdClass();
