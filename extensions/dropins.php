@@ -24,7 +24,7 @@ add_shortcode('facebook_comments', function($atts){
     $r .= '<div class="clear"></div>';
     $r .= '<br />';
     if(isset($shareurl) && !empty($shareurl)){
-        $url = $shareurl;
+        $url = esc_attr($shareurl);
     }
     $r .= '<div class="fb-comments" data-href="'. $url .'" data-numposts="5" data-order-by="reverse_time"></div>';
     return $r;
