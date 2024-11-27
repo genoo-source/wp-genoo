@@ -55,6 +55,11 @@ class RepositoryPages extends Repository
     public $api;
 
     /**
+     * Flag to notify pages table about sync failure
+     */
+    public $syncFailed;
+
+    /**
      * Directory Key map
      */
     public $directoryTree;
@@ -111,7 +116,8 @@ class RepositoryPages extends Repository
             }
         } catch (\Exception $e) {
         }
-        return is_array($prepForms) ? $prepForms : [];
+        $this->syncFailed = !is_array($prepForms);
+        return $this->syncFailed ? [] : $prepForms;
     }
 
     /**
