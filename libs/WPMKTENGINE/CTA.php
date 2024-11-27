@@ -188,7 +188,7 @@ class CTA
         $a1 = $this->post->getMeta('class_list');
         // A
         $k = ($z == '0' || empty($z)) ? false : true;
-        $this->isPopOver = $this->post->getMeta('enable_pop_up_to_open_automatically') == 0 ? FALSE : TRUE;
+        $this->isPopOver = !empty($this->post->getMeta('enable_pop_over_to_open_automatically'));
         $this->popOverTime = $this->post->getMeta('number_of_seconds_to_open_the_pop_up_after') ? (int)$this->post->getMeta('number_of_seconds_to_open_the_pop_up_after') : 0;
         $this->popOverHide = $this->post->getMeta('hide_pop_up_button') == 0 ? TRUE : FALSE;
         $this->messageSuccess = $this->post->getMeta('form_success_message');
@@ -226,7 +226,7 @@ class CTA
     {
         if(Post::exists($post_id)){
             $popOver = get_post_meta($post_id, 'enable_pop_over_to_open_automatically', TRUE);
-            return $popOver == 0 ? FALSE : TRUE;
+            return !empty($popOver);
         }
         return FALSE;
     }

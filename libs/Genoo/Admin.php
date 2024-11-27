@@ -756,6 +756,7 @@ class Admin
                     array(
                         'type' => 'select',
                         'label' => __('Enable Pop-Over to open automatically', 'genoo'),
+                        'id' => 'enable_pop_over_to_open_automatically',
                         'options' => array('Disable', 'Enable')
                     ),
                     array(
