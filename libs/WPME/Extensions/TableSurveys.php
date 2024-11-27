@@ -160,7 +160,7 @@ class TableSurveys extends \WPME\TableFactory
         if(isset($_POST['genooSurveysFlushCache'])){
             try{
                 $this->repositorySurveys->flush();
-                $this->addNotice('updated', __('All survyes successfully synced.', 'wpmktengine'));
+                $this->addNotice('updated', __('All surveys successfully synced.', 'wpmktengine'));
             } catch (\Exception $e){
                 $this->addNotice('error', $e->getMessage());
             }
