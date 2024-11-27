@@ -111,7 +111,7 @@ class RepositoryPages extends Repository
             }
         } catch (\Exception $e) {
         }
-        return $prepForms;
+        return is_array($prepForms) ? $prepForms : [];
     }
 
     /**
