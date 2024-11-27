@@ -590,7 +590,13 @@ class TablePages extends Table
     /**
      * No Items notices
      */
-    function no_items(){ echo __('There are no Pages created in your account.', 'wpmktengine'); }
+    function no_items(){
+      if ($this->repositoryPages->syncFailed) {
+        echo __('<b>Sync failed. Please retry.</b>', 'wpmktengine');
+      } else {
+        echo __('There are no Pages created in your account.', 'wpmktengine');
+      }
+    }
 
     /**
      * Process it!
