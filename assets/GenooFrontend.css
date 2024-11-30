@@ -685,3 +685,7 @@ body .gn-modal-result-success .display-on-success { display: block !important; }
 
 body.genooModalOpen::after {display: none;}
 .genooInlineBlock .themeDefault { max-width: 100%; }
+
+.iti--allow-dropdown input[type=tel] {
+    padding-left: 52px !important;
+}
