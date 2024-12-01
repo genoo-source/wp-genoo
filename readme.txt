@@ -69,6 +69,12 @@ Not a Genoo customer yet? Let's get your ["30-Day Free Trial"](http://www.genoo.
 
 == Changelog ==
 
+= 6.0.18 = 
+* Fixed ability to view PageBuilder list
+* Fixed security vulnerability with shortcode processing
+* Fixed Phone number field format on CTA Pop Ups
+* Fixed confirmation msg display when Follow Return URL disabled on CTAs
+
 = 6.0.10 = 
 * Minor changes to rendering order of header scripts
 
