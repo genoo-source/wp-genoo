@@ -213,7 +213,7 @@ class CTA
         $this->button_id = $this->post->getMeta('button_css_id');
         $this->button_class = $this->post->getMeta('button_css_class');
         if($this->isForm){
-            $this->followOriginalUrl = $this->post->getMeta('follow_original_return_url') == 0 ? FALSE : TRUE;
+            $this->followOriginalUrl = !empty($this->post->getMeta('follow_original_return_url'));
         }
         $this->popup = $this->post->getMeta('formpop');
     }
