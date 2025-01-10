@@ -283,7 +283,7 @@ class Widgets
                                             $sidebars[$sidebarKey] = ArrayObject::prependToTheBeginning($sidebars[$sidebarKey], $widget->widget);
                                         } else {                            // Other
                                             $position = ($widget->position < 0) ? 0 : $widget->position - 1;
-                                            $sidebars[$sidebarKey] = ArrayObject::appendTo($sidebars[$sidebarKey], $position, $widget->widget);
+                                            $sidebars[$sidebarKey] = ArrayObject::appendTo($sidebars[$sidebarKey], $widget->widget, $position);
                                         }
                                     }
                                 }
