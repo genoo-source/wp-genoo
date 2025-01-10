@@ -69,6 +69,9 @@ Not a Genoo customer yet? Let's get your ["30-Day Free Trial"](http://www.genoo.
 
 == Changelog ==
 
+= 6.0.19 =
+* Fixed Dynamic CTA specific position placement (2-n) display issue.
+
 = 6.0.18 = 
 * Fixed ability to view PageBuilder list
 * Fixed security vulnerability with shortcode processing
