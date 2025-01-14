@@ -29,29 +29,26 @@ jobs:
       SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           ref: master
+      - name: Install Subversion
+        run: sudo apt-get update && sudo apt-get install -y subversion
       - name: Setup Variables
-        id: branch_name
         run: |
-          echo ::set-output name=SOURCE_NAME::${GITHUB_REF#refs/*/}
-          echo ::set-output name=SOURCE_BRANCH::${GITHUB_REF#refs/heads/}
-          echo ::set-output name=SOURCE_TAG::${GITHUB_REF#refs/tags/}
-      - name: Setup Variables - Test
+          echo "SOURCE_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+          echo "SOURCE_BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+          echo "SOURCE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      - name: Debug Variables
         run: |
-          echo $SOURCE_NAME
-          echo $SOURCE_BRANCH
-          echo $SOURCE_TAG
-        env:
-          SOURCE_NAME: ${{ steps.branch_name.outputs.SOURCE_NAME }}
-          SOURCE_BRANCH: ${{ steps.branch_name.outputs.SOURCE_BRANCH }}
-          SOURCE_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
+          echo "SOURCE_NAME=$SOURCE_NAME"
+          echo "SOURCE_BRANCH=$SOURCE_BRANCH"
+          echo "SOURCE_TAG=$SOURCE_TAG"
       - name: Deploy to SVN
         run: |
           sh ./deploy/deploy.sh
         env:
-          TRAVIS_TAG: ${{ steps.branch_name.outputs.SOURCE_TAG }}
+          TRAVIS_TAG: $SOURCE_TAG
   slack:
     name: Slack Notification
     needs: deploy
