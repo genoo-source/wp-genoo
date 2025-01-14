@@ -5,7 +5,7 @@ Requires at least: 4.6
 Tested up to: 6.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 6.0.20
+Stable tag: 6.0.21
 
 Combine the flexibility of WordPress with the power of Genoo and experience amazing results!
 
