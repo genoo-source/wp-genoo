@@ -108,18 +108,18 @@ class RepositoryPages extends Repository
      */
     public function getPages()
     {
-        $prepForms = '';
-        try {
-            if (!$prepForms = $this->cache->get(self::REPO_NAMESPACE, self::REPO_NAMESPACE)) {
-                $prepForms = $this->api->getPages();
-                if (is_array($prepForms)) {
-                  $this->cache->set(self::REPO_NAMESPACE, $prepForms, self::REPO_TIMER, self::REPO_NAMESPACE);
-                }
+      try {
+        $prepForms =  $this->cache->get(self::REPO_NAMESPACE, self::REPO_NAMESPACE);
+        if (!is_array($prepForms) || !$prepForms) {
+            $prepForms = $this->api->getPages();
+            if (is_array($prepForms)) {
+              $this->cache->set(self::REPO_NAMESPACE, $prepForms, self::REPO_TIMER, self::REPO_NAMESPACE);
             }
-        } catch (\Exception $e) {
         }
-        $this->syncFailed = !is_array($prepForms);
-        return $this->syncFailed ? [] : $prepForms;
+      } catch (\Exception $e) {
+      }
+      $this->syncFailed = !is_array($prepForms);
+      return $this->syncFailed ? [] : $prepForms;
     }
 
     /**
