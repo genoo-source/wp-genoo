@@ -112,7 +112,9 @@ class RepositoryPages extends Repository
         try {
             if (!$prepForms = $this->cache->get(self::REPO_NAMESPACE, self::REPO_NAMESPACE)) {
                 $prepForms = $this->api->getPages();
-                $this->cache->set(self::REPO_NAMESPACE, $prepForms, self::REPO_TIMER, self::REPO_NAMESPACE);
+                if (is_array($prepForms)) {
+                  $this->cache->set(self::REPO_NAMESPACE, $prepForms, self::REPO_TIMER, self::REPO_NAMESPACE);
+                }
             }
         } catch (\Exception $e) {
         }
