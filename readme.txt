@@ -69,6 +69,9 @@ Not a Genoo customer yet? Let's get your ["30-Day Free Trial"](http://www.genoo.
 
 == Changelog ==
 
+= 6.0.22 = 
+* Fixed issue with PageBuilder pages (templates) being cleared from cache prior to being refreshed, and pages not able to display.
+
 = 6.0.19 =
 * Fixed Dynamic CTA specific position placement (2-n) display issue.
 
